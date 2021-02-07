@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Place from "../place/place";
 
-const Main = (props) => {
+const MainPage = (props) => {
   const {placesCount} = props;
 
   return (
@@ -102,8 +102,8 @@ const Main = (props) => {
   );
 };
 
-Main.propTypes = {
+MainPage.propTypes = {
   placesCount: PropTypes.number.isRequired,
 };
 
-export default Main;
+export default MainPage;
