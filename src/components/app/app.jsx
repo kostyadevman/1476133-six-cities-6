@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import MainPage from "../main-page/main-page";
-import AuthPage from "../auth-page/auth-page";
-import FavoritePlacesPage from "../favorite-places-page/fevorite-places-page";
-import PlaceDetailPage from "../place-detail-page/place-detail-page";
-import NotFoundPage from "../not-found-page/not-found-page";
+import MainPage from "../pages/main-page/main-page";
+import AuthPage from "../pages/auth-page/auth-page";
+import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-page";
+import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
+import NotFoundPage from "../pages/not-found-page/not-found-page";
 
 const App = (props) => {
   const {placesCount} = props;
