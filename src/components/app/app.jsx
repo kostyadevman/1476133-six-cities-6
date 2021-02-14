@@ -8,16 +8,16 @@ import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 
 const App = (props) => {
-  const {placesCount} = props;
+  const {placesCount, offers} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage placesCount={placesCount} />
+          <MainPage placesCount={placesCount} offers={offers} />
         </Route>
         <Route exact path="/favorites">
-          <FavoritePlacesPage />
+          <FavoritePlacesPage offers={offers}/>
         </Route>
         <Route exact path="/login">
           <AuthPage />
@@ -38,6 +38,7 @@ const App = (props) => {
 
 App.propTypes = {
   placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.array.isRequired
 };
 
 export default App;

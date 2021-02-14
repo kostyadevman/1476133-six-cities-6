@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Place from "../../place/place";
 import Header from "../../layout/header/header";
-import {MY_ONLY_USER} from "../../../mock/users";
+import {MY_ONLY_USER} from "../../../mocks/users";
+import PlaceList from "../../place-list/place-list";
+import {propTypesPlace} from "../../../utils/place";
 
 
 const MainPage = (props) => {
-  const {placesCount} = props;
+  const {placesCount, offers} = props;
 
   return (
     <div className="page page--gray page--main">
@@ -71,9 +72,7 @@ const MainPage = (props) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {[...Array(placesCount).keys()].map((placeId) => <Place key={placeId} />)}
-              </div>
+              <PlaceList placesCount={placesCount} offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"/>
@@ -87,6 +86,7 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   placesCount: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
 export default MainPage;
