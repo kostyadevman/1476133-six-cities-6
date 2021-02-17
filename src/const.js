@@ -14,3 +14,4 @@ export const RatingMap = {
   4: `good`,
   5: `perfect`,
 };
+

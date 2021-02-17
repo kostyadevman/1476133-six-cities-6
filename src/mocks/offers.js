@@ -17,7 +17,7 @@ export default [
     "host": {
       "avatar_url": `${AVATAR_URL}?rnd=${Math.random()}`,
       "id": 1,
-      "is_pro": true,
+      "is_pro": false,
       "name": `Angelina`
     },
     "id": 5775731411,
@@ -55,7 +55,7 @@ export default [
       "name": `Bob`
     },
     "id": 4571379718,
-    "images": [`https://picsum.photos/200`, `https://picsum.photos/200`, `https://picsum.photos/200`, `https://picsum.photos/200`, `https://picsum.photos/200`, `https://picsum.photos/200`],
+    "images": [`${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`],
     "is_favorite": true,
     "is_premium": true,
     "location": {
@@ -89,7 +89,7 @@ export default [
       "name": `Kitty`
     },
     "id": 6586068450,
-    "images": [`https://picsum.photos/200`],
+    "images": [`${PICTURE_URL}?random=${Math.random()}`],
     "is_favorite": false,
     "is_premium": true,
     "location": {
@@ -123,7 +123,7 @@ export default [
       "name": `Jerry`
     },
     "id": 4007345069,
-    "images": [`https://picsum.photos/200`, `https://picsum.photos/200`, `https://picsum.photos/200`],
+    "images": [`${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`],
     "is_favorite": false,
     "is_premium": false,
     "location": {

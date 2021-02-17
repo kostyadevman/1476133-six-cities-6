@@ -6,8 +6,7 @@ import {propTypesPlace} from "../../../utils/place";
 import FavoritePlaceList from "../../favorite-place-list/favorite-place-list";
 
 
-const FavoritePlacesPage = (props) => {
-  const {offers} = props;
+const FavoritePlacesPage = ({offers}) => {
 
   return (
     <div className="page">
@@ -31,6 +30,8 @@ const FavoritePlacesPage = (props) => {
   );
 };
 
-FavoritePlacesPage.propTypes = PropTypes.arrayOf(propTypesPlace).isRequired;
+FavoritePlacesPage.propTypes = {
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired
+};
 
 export default FavoritePlacesPage;

@@ -5,8 +5,7 @@ import Place from "../place/place";
 import {CardType} from "../../const";
 
 
-const FavoritePlaceList = (props) => {
-  const {offers} = props;
+const FavoritePlaceList = ({offers}) => {
   const offerGroups = groupByLocation(offers);
   const locations = Object.keys(offerGroups);
 

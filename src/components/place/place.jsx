@@ -1,29 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {adaptToClient, makeRatingScore, propTypesPlace} from "../../utils/place";
+import {adaptOfferToClient, makeRatingScore, propTypesPlace} from "../../utils/place";
 import {capitalize} from "../../utils/common";
-import {CardType} from "../../const";
 import {Link} from "react-router-dom";
+import {PLACE_SETTING} from "../../utils/place";
 
-
-const Place = (props) => {
-  const {offer, cardType} = props;
-  const {id, isPremiun, previewImage, price, type, rating, description} = adaptToClient(offer);
-  const articleClassName = cardType === CardType.CITIES ?
-    `cities__place-card place-card` :
-    `favorites__card place-card`;
-  const imgWrapperClassName = `${cardType}__image-wrapper place-card__image-wrapper`;
-  const imgWidth = cardType === CardType.CITIES ? 260 : 150;
-  const imgHeight = cardType === CardType.CITIES ? 200 : 110;
+const Place = ({offer, cardType}) => {
+  const {
+    id,
+    isPremium,
+    previewImage,
+    price,
+    type,
+    rating,
+    title
+  } = adaptOfferToClient(offer);
 
   return (
-    <article className={articleClassName}>
-      {(isPremiun & cardType === CardType.CITIES) ? <div className="place-card__mark">
-        <span>Premium</span>
-      </div> : ``}
-      <div className={imgWrapperClassName}>
+    <article className={PLACE_SETTING[cardType].articleClassName}>
+      {
+        (PLACE_SETTING[cardType].premiumMark && isPremium) &&
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      }
+      <div className={PLACE_SETTING[cardType].imgWrapperClassName}>
         <a href="#">
-          <img className="place-card__image" src={previewImage} width={imgWidth} height={imgHeight} alt="Place image" />
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={PLACE_SETTING[cardType].imgWidth}
+            height={PLACE_SETTING[cardType].imgHeight}
+            alt="Place image"
+          />
         </a>
       </div>
       <div className="place-card__info">
@@ -46,7 +55,7 @@ const Place = (props) => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`} href="#">{description}</Link>
+          <Link to={`/offer/${id}`} href="#">{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
       </div>

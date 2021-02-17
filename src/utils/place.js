@@ -1,13 +1,30 @@
 import PropTypes from "prop-types";
 import {CITIES, MAX_RATING, PLACE_TYPE} from "../const";
 
-export const adaptToClient = (place) => {
+export const PLACE_SETTING = {
+  cities: {
+    imgHeight: 200,
+    imgWidth: 260,
+    articleClassName: `cities__place-card place-card`,
+    imgWrapperClassName: `cities__image-wrapper place-card__image-wrapper`,
+    premiumMark: false
+  },
+  favorites: {
+    imgHeight: 110,
+    imgWidth: 150,
+    articleClassName: `favorites__card place-card`,
+    imgWrapperClassName: `favorites__image-wrapper place-card__image-wrapper`,
+    premiumMark: true
+  }
+};
+
+export const adaptOfferToClient = (place) => {
   const adaptedPlace = Object.assign(
       {},
       place,
       {
         isFavorite: place.is_favorite,
-        isPremiun: place.is_premium,
+        isPremium: place.is_premium,
         maxAdults: place.max_adults,
         previewImage: place.preview_image,
         host: Object.assign(
@@ -25,11 +42,13 @@ export const adaptToClient = (place) => {
   delete adaptedPlace.is_premium;
   delete adaptedPlace.max_adults;
   delete adaptedPlace.preview_image;
+  delete adaptedPlace.host.avatar_url;
+  delete adaptedPlace.host.is_pro;
 
   return adaptedPlace;
 };
 
-export const adaptToServer = (place) => {
+export const adaptOfferToServer = (place) => {
   const adaptedPlace = Object.assign(
       {},
       place,
@@ -42,7 +61,7 @@ export const adaptToServer = (place) => {
 };
 
 export const makeRatingScore = (rating) => {
-  return Math.round(rating / MAX_RATING) * 100;
+  return (Math.round(rating) / MAX_RATING) * 100;
 };
 
 export const groupByLocation = (offers) => {
@@ -86,4 +105,5 @@ export const propTypesPlace = PropTypes.shape({
   "title": PropTypes.string.isRequired,
   "type": PropTypes.oneOf(PLACE_TYPE).isRequired
 });
+
 

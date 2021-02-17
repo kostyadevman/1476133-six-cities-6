@@ -6,9 +6,10 @@ import AuthPage from "../pages/auth-page/auth-page";
 import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-page";
 import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
+import {propTypesPlace} from "../../utils/place";
+import {propTypesReview} from "../../utils/review";
 
-const App = (props) => {
-  const {placesCount, offers} = props;
+const App = ({placesCount, offers, reviews}) => {
 
   return (
     <BrowserRouter>
@@ -25,7 +26,10 @@ const App = (props) => {
         <Route exact path="/offer/:id"
           render={({match}) => {
             const {id} = match.params;
-            return <PlaceDetailPage placeId={parseInt(id, 10)} />;
+            const offer = offers.find((place) => {
+              return place.id === parseInt(id, 10);
+            });
+            return <PlaceDetailPage offer={offer} reviews={reviews}/>;
           }}
         />
         <Route>
@@ -38,7 +42,8 @@ const App = (props) => {
 
 App.propTypes = {
   placesCount: PropTypes.number.isRequired,
-  offers: PropTypes.array.isRequired
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired,
+  reviews: PropTypes.arrayOf(propTypesReview).isRequired
 };
 
 export default App;
