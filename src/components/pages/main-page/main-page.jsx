@@ -4,10 +4,10 @@ import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
 import PlaceList from "../../place-list/place-list";
 import {propTypesPlace} from "../../../utils/place";
+import Map from "../../map/map";
 
 
-const MainPage = (props) => {
-  const {placesCount, offers} = props;
+const MainPage = ({placesCount, offers}) => {
 
   return (
     <div className="page page--gray page--main">
@@ -75,7 +75,7 @@ const MainPage = (props) => {
               <PlaceList placesCount={placesCount} offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"/>
+              <Map offers={offers}/>
             </div>
           </div>
         </div>

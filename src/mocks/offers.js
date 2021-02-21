@@ -6,8 +6,8 @@ export default [
     "bedrooms": 3,
     "city": {
       "location": {
-        "latitude": 52.370216,
-        "longitude": 4.895168,
+        "latitude": 52.3909553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
       "name": `Amsterdam`
@@ -40,11 +40,11 @@ export default [
     "bedrooms": 4,
     "city": {
       "location": {
-        "latitude": 48.858093,
-        "longitude": 2.294694,
+        "latitude": 52.369553943508,
+        "longitude": 4.85309666406198,
         "zoom": 10
       },
-      "name": `Paris`
+      "name": `Amsterdam`
     },
     "description": `From the outside this house looks old, but wonderful.`,
     "goods": [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`],
@@ -74,8 +74,8 @@ export default [
     "bedrooms": 1,
     "city": {
       "location": {
-        "latitude": 52.370216,
-        "longitude": 4.895168,
+        "latitude": 52.3909553943508,
+        "longitude": 4.929309666406198,
         "zoom": 10
       },
       "name": `Amsterdam`
@@ -108,11 +108,11 @@ export default [
     "bedrooms": 2,
     "city": {
       "location": {
-        "latitude": 52.370216,
-        "longitude": 4.895168,
+        "latitude": 52.3809553943508,
+        "longitude": 4.939309666406198,
         "zoom": 10
       },
-      "name": `Hamburg`
+      "name": `Amsterdam`
     },
     "description": `The scent of earthy decay assaults your nose upon peering through the open door to this room.`,
     "goods": [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
