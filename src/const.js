@@ -4,9 +4,19 @@ export const MAX_RATING = 5;
 
 export const CardType = {
   CITIES: `cities`,
-  FAVORITES: `favorites`
+  FAVORITES: `favorites`,
+  NEAR: `near`
 };
 
+export const PlaceListType = {
+  CITIES: `cities`,
+  NEAR: `near`
+};
+
+export const MapType = {
+  CITIES: `cities`,
+  NEAR: `near`,
+};
 export const RatingMap = {
   1: `terribly`,
   2: `badly`,

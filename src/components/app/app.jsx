@@ -9,13 +9,13 @@ import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {propTypesPlace} from "../../utils/place";
 import {propTypesReview} from "../../utils/review";
 
-const App = ({placesCount, offers, reviews}) => {
+const App = ({offers, reviews, offersNearby}) => {
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage placesCount={placesCount} offers={offers} />
+          <MainPage offers={offers} />
         </Route>
         <Route exact path="/favorites">
           <FavoritePlacesPage offers={offers}/>
@@ -29,7 +29,11 @@ const App = ({placesCount, offers, reviews}) => {
             const offer = offers.find((place) => {
               return place.id === parseInt(id, 10);
             });
-            return <PlaceDetailPage offer={offer} reviews={reviews}/>;
+            return <PlaceDetailPage
+              offer={offer}
+              reviews={reviews}
+              offersNearby={offersNearby}
+            />;
           }}
         />
         <Route>
@@ -41,9 +45,9 @@ const App = ({placesCount, offers, reviews}) => {
 };
 
 App.propTypes = {
-  placesCount: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
-  reviews: PropTypes.arrayOf(propTypesReview).isRequired
+  reviews: PropTypes.arrayOf(propTypesReview).isRequired,
+  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
 export default App;

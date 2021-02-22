@@ -1,9 +1,9 @@
 import React from 'react';
-import {propTypesReview, adaptReviewToClient} from "../../utils/review";
+import {propTypesReview, adaptReviewToClient, getDate} from "../../utils/review";
 import {makeRatingScore} from "../../utils/place";
 
 const ReviewItem = ({review}) => {
-  const {user, rating, comment} = adaptReviewToClient(review);
+  const {user, rating, comment, date} = adaptReviewToClient(review);
 
   return (
     <li className="reviews__item">
@@ -26,7 +26,7 @@ const ReviewItem = ({review}) => {
         <p className="reviews__text">
           {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={getDate(date, `YYYY-MM-DD`)}>{getDate(date, `MMM YYYY`)}</time>
       </div>
     </li>
   );

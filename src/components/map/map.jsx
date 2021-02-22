@@ -1,13 +1,13 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
-import {propTypesPlace} from "../../utils/place";
+import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 
 const zoom = 12;
 const city = [52.38333, 4.9];
 
-const Map = ({offers}) => {
+const Map = ({offers, mapType}) => {
 
   const mapRef = useRef();
 
@@ -49,12 +49,16 @@ const Map = ({offers}) => {
   }, []);
 
   return (
-    <section id="map" className="cities__map map" style={{height: `500px`}} ref={mapRef} />
+    <section
+      id="map"
+      className={MAP_SETTINGS[mapType].className}
+      ref={mapRef} />
   );
 };
 
 Map.propTypes = {
-  offers: PropTypes.arrayOf(propTypesPlace).isRequired
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired,
+  mapType: PropTypes.string.isRequired
 };
 
 export default Map;

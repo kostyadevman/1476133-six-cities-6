@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import {CITIES, MAX_RATING, PLACE_TYPE} from "../const";
+import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "../const";
 
-export const PLACE_SETTING = {
+export const PLACE_SETTINGS = {
   cities: {
     imgHeight: 200,
     imgWidth: 260,
@@ -15,6 +15,33 @@ export const PLACE_SETTING = {
     articleClassName: `favorites__card place-card`,
     imgWrapperClassName: `favorites__image-wrapper place-card__image-wrapper`,
     premiumMark: true
+  },
+  near: {
+    imgHeight: 200,
+    imgWidth: 260,
+    articleClassName: `near-places__card place-card`,
+    imgWrapperClassName: `near-places__image-wrapper place-card__image-wrapper`,
+    premiumMark: false
+  }
+};
+
+export const PLACE_LIST_SETTINGS = {
+  near: {
+    className: `near-places__list places__list`,
+    cardType: CardType.NEAR
+  },
+  cities: {
+    className: `cities__places-list places__list tabs__content`,
+    cardType: CardType.CITIES
+  }
+};
+
+export const MAP_SETTINGS = {
+  near: {
+    className: `property__map map`,
+  },
+  cities: {
+    className: `cities__map map`
   }
 };
 

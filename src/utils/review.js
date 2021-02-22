@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
 
 export const adaptReviewToClient = (review) => {
   const adaptedReview = Object.assign(
@@ -46,3 +47,7 @@ export const propTypesReview = PropTypes.shape({
     "name": PropTypes.string.isRequired
   })
 });
+
+export const getDate = (date, format) => {
+  return dayjs(date).format(format);
+};
