@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Place from "../place/place";
 import PropTypes from "prop-types";
 import {propTypesPlace} from "../../utils/place";
@@ -24,4 +25,10 @@ PlaceList.propTypes = {
   placeListType: PropTypes.string.isRequired
 };
 
-export default PlaceList;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+
+export {PlaceList};
+export default connect(mapStateToProps, null)(PlaceList);

@@ -25,3 +25,4 @@ export const RatingMap = {
   5: `perfect`,
 };
 
+export const INITIAL_LOCATION = `Paris`;

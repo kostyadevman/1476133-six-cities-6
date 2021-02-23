@@ -3,12 +3,14 @@ import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
+import {connect} from "react-redux";
+
 
 const zoom = 12;
 const city = [52.38333, 4.9];
 
-const Map = ({offers, mapType}) => {
-
+// eslint-disable-next-line no-unused-vars
+const Map = ({locationCity, offers, mapType}) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -58,7 +60,15 @@ const Map = ({offers, mapType}) => {
 
 Map.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
-  mapType: PropTypes.string.isRequired
+  mapType: PropTypes.string.isRequired,
+  locationCity: PropTypes.string.isRequired
 };
 
-export default Map;
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+  locationCity: state.locationCity
+});
+
+
+export {Map};
+export default connect(mapStateToProps, null)(Map);
