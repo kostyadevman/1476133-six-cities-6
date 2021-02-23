@@ -5,9 +5,10 @@ import {MY_ONLY_USER} from "../../../mocks/users";
 import PlaceList from "../../place-list/place-list";
 import {propTypesPlace} from "../../../utils/place";
 import Map from "../../map/map";
+import {MapType, PlaceListType} from "../../../const";
 
 
-const MainPage = ({placesCount, offers}) => {
+const MainPage = ({offers}) => {
 
   return (
     <div className="page page--gray page--main">
@@ -72,10 +73,10 @@ const MainPage = ({placesCount, offers}) => {
                   <li className="places__option" tabIndex="0">Top rated first</li>
                 </ul>
               </form>
-              <PlaceList placesCount={placesCount} offers={offers} />
+              <PlaceList offers={offers} placeListType={PlaceListType.CITIES} />
             </section>
             <div className="cities__right-section">
-              <Map offers={offers}/>
+              <Map offers={offers} mapType={MapType.CITIES}/>
             </div>
           </div>
         </div>
@@ -85,7 +86,6 @@ const MainPage = ({placesCount, offers}) => {
 };
 
 MainPage.propTypes = {
-  placesCount: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 

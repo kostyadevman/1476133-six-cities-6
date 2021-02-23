@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {adaptOfferToClient, makeRatingScore, propTypesPlace} from "../../utils/place";
 import {capitalize} from "../../utils/common";
 import {Link} from "react-router-dom";
-import {PLACE_SETTING} from "../../utils/place";
+import {PLACE_SETTINGS} from "../../utils/place";
 
 const Place = ({offer, cardType}) => {
   const {
@@ -17,20 +17,20 @@ const Place = ({offer, cardType}) => {
   } = adaptOfferToClient(offer);
 
   return (
-    <article className={PLACE_SETTING[cardType].articleClassName}>
+    <article className={PLACE_SETTINGS[cardType].articleClassName}>
       {
-        (PLACE_SETTING[cardType].premiumMark && isPremium) &&
+        (PLACE_SETTINGS[cardType].premiumMark && isPremium) &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className={PLACE_SETTING[cardType].imgWrapperClassName}>
+      <div className={PLACE_SETTINGS[cardType].imgWrapperClassName}>
         <a href="#">
           <img
             className="place-card__image"
             src={previewImage}
-            width={PLACE_SETTING[cardType].imgWidth}
-            height={PLACE_SETTING[cardType].imgHeight}
+            width={PLACE_SETTINGS[cardType].imgWidth}
+            height={PLACE_SETTINGS[cardType].imgHeight}
             alt="Place image"
           />
         </a>
