@@ -1,27 +1,26 @@
 import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
+import {CitiesMap} from "../../const";
 import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {connect} from "react-redux";
 
-
 const zoom = 12;
-const city = [52.38333, 4.9];
 
-// eslint-disable-next-line no-unused-vars
 const Map = ({locationCity, offers, mapType}) => {
   const mapRef = useRef();
 
   useEffect(() => {
+    const center = CitiesMap[locationCity];
     mapRef.current = leaflet.map(`map`, {
-      center: city,
+      center,
       zoom,
       zoomControl: false,
       marker: true
     });
 
-    mapRef.current.setView(city, zoom);
+    mapRef.current.setView(center, zoom);
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -44,17 +43,19 @@ const Map = ({locationCity, offers, mapType}) => {
       .addTo(mapRef.current)
       .bindPopup(offer.city.name);
 
-      return () => {
-        mapRef.current.remove();
-      };
+
     });
-  }, []);
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [locationCity, offers]);
 
   return (
     <section
       id="map"
       className={MAP_SETTINGS[mapType].className}
-      ref={mapRef} />
+      ref={mapRef}
+    />
   );
 };
 
@@ -72,3 +73,4 @@ const mapStateToProps = (state) => ({
 
 export {Map};
 export default connect(mapStateToProps, null)(Map);
+
