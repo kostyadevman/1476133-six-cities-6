@@ -137,5 +137,40 @@ export default [
     "rating": 3.2,
     "title": `Beautiful & luxurious studio at great location`,
     "type": `hotel`
+  },
+  {
+    "bedrooms": 2,
+    "city": {
+      "location": {
+        "latitude": 52.3809553943508,
+        "longitude": 4.939309666406198,
+        "zoom": 10
+      },
+      "name": `Paris`
+    },
+    "description": `The scent of earthy decay assaults your nose upon peering through the open door to this room.`,
+    "goods": [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
+    "host": {
+      "avatar_url": `${AVATAR_URL}?rnd=${Math.random()}`,
+      "id": 3,
+      "is_pro": true,
+      "name": `Jerry`
+    },
+    "id": 4007345070,
+    "images": [`${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`, `${PICTURE_URL}?random=${Math.random()}`],
+    "is_favorite": false,
+    "is_premium": false,
+    "location": {
+      "latitude": 52.35514938496378,
+      "longitude": 4.673877537499948,
+      "zoom": 8
+    },
+    "max_adults": 4,
+    "preview_image": `${PICTURE_URL}?random=${Math.random()}`,
+    "price": 120,
+    "rating": 3.2,
+    "title": `Beautiful & luxurious studio at great location`,
+    "type": `hotel`
   }
+
 ];
