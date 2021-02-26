@@ -1,6 +1,14 @@
 export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];
 export const PLACE_TYPE = [`apartment`, `room`, `house`, `hotel`];
+export const SORT_TYPES = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 export const MAX_RATING = 5;
+
+export const SortTypes = {
+  POPULAR: `Popular`,
+  PRICE_INC: `Price: low to high`,
+  PRICE_DEC: `Price: high to low`,
+  TOP: `Top rated first`
+};
 
 export const CardType = {
   CITIES: `cities`,
@@ -26,6 +34,7 @@ export const RatingMap = {
 };
 
 export const INITIAL_LOCATION = `Paris`;
+export const INITIAL_SORT_TYPE = `Popular`;
 
 export const CitiesMap = {
   Amsterdam: [52.3833, 4.9044],

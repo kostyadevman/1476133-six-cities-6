@@ -1,7 +1,10 @@
 export const ActionType = {
   CHANGE_LOCATION: `domain/changeLocation`,
   CHANGE_OFFERS: `domain/changeOffers`,
-  RESET: `domain/reset`
+  RESET: `domain/reset`,
+  CHANGE_SORT_TYPE: `sort/changeSortType`,
+  SORT: `sort/Sort`,
+  SET_ACTIVE_OFFER: `place-list/setActiveOffer`
 };
 
 export const ActionCreator = {
@@ -17,5 +20,15 @@ export const ActionCreator = {
 
   reset: () => ({
     type: ActionType.RESET
+  }),
+
+  changeSortType: (sortType) => ({
+    type: ActionType.CHANGE_SORT_TYPE,
+    payload: sortType
+  }),
+
+  setActiveOffer: (id) => ({
+    type: ActionType.SET_ACTIVE_OFFER,
+    payload: id
   })
 };
