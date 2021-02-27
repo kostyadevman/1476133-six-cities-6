@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {CitiesMap} from "../../const";
-import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
+import {getOffersByLocation, MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {connect} from "react-redux";
 
@@ -67,7 +67,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: getOffersByLocation(state.offers, state.locationCity),
   locationCity: state.locationCity,
   activeOffer: state.activeOffer
 });

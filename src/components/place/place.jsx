@@ -16,12 +16,13 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
     title
   } = adaptOfferToClient(offer);
 
-  const mouseEnterHandler = () => setActive(offer.id);
-  const mouseLeaveHandler = () => unsetActive();
+  const handleMouseEnter = () => setActive(offer.id);
+  const handleMouseLeave = () => unsetActive();
 
   return (
-    <article onMouseEnter={mouseEnterHandler}
-      onMouseLeave={mouseLeaveHandler}
+    <article
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={PLACE_SETTINGS[cardType].articleClassName}>
       {
         (PLACE_SETTINGS[cardType].premiumMark && isPremium) &&

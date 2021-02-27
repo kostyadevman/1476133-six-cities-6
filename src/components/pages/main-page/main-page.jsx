@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
 import PlaceList from "../../place-list/place-list";
-import {propTypesPlace} from "../../../utils/place";
+import {getOffersByLocation, propTypesPlace} from "../../../utils/place";
 import Map from "../../map/map";
 import {MapType, PlaceListType} from "../../../const";
 import LocationList from "../../location-list/location-list";
@@ -51,7 +51,7 @@ MainPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: getOffersByLocation(state.offers, state.locationCity),
   locationCity: state.locationCity
 });
 

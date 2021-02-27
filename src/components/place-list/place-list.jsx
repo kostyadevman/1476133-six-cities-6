@@ -2,18 +2,17 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Place from "../place/place";
 import PropTypes from "prop-types";
-import {propTypesPlace} from "../../utils/place";
+import {getOffersByLocation, propTypesPlace} from "../../utils/place";
 import {sortOffers} from "../../utils/sort";
 import {PLACE_LIST_SETTINGS} from "../../utils/place";
 import {SORT_TYPES} from "../../const";
 import {ActionCreator} from "../../store/action";
 
-const PlaceList = ({offers, placeListType, sortType, setActive, unsetActive}) => {
-  const sortedOffers = sortOffers(offers, sortType);
+const PlaceList = ({offers, placeListType, setActive, unsetActive}) => {
 
   return (
     <div className={PLACE_LIST_SETTINGS[placeListType].className}>
-      {sortedOffers.map((offer) => (
+      {offers.map((offer) => (
         <Place
           cardType={PLACE_LIST_SETTINGS[placeListType].cardType}
           offer={offer}
@@ -35,8 +34,7 @@ PlaceList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
-  sortType: state.sortType
+  offers: sortOffers(getOffersByLocation(state.offers, state.locationCity), state.sortType)
 });
 
 const mapDispatchToProps = (dispatch) => ({

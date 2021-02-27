@@ -1,11 +1,10 @@
 import {ActionType} from "./action";
 import {INITIAL_LOCATION, INITIAL_SORT_TYPE} from "../const";
-import {getOffersByLocation} from "../utils/place";
-
+import offers from "../mocks/offers";
 
 const initialState = {
   locationCity: INITIAL_LOCATION,
-  offers: getOffersByLocation(INITIAL_LOCATION),
+  offers,
   sortType: INITIAL_SORT_TYPE,
   activeOffer: null
 };

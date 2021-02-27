@@ -6,13 +6,13 @@ const LocationItem = ({onChangeLocation, location, isActive}) => {
     `locations__item-link tabs__item tabs__item--active` :
     `locations__item-link tabs__item`;
 
-  const linkClickHandler = () => {
+  const handleLinkClick = () => {
     onChangeLocation(location);
   };
 
   return (
     <li className="locations__item">
-      <a onClick={linkClickHandler} className={className}>
+      <a onClick={handleLinkClick} className={className}>
         <span>{location}</span>
       </a>
     </li>
