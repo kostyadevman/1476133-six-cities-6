@@ -1,12 +1,13 @@
 import {ActionType} from "./action";
 import {INITIAL_LOCATION, INITIAL_SORT_TYPE} from "../const";
-import offers from "../mocks/offers";
+
 
 const initialState = {
   locationCity: INITIAL_LOCATION,
-  offers,
+  offers: [],
   sortType: INITIAL_SORT_TYPE,
-  activeOffer: null
+  activeOffer: null,
+  isOfferListLoaded: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -38,6 +39,13 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         activeOffer: action.payload
+      };
+
+    case ActionType.LOAD_OFFERS:
+      return {
+        ...state,
+        offers: action.payload,
+        isOfferListLoaded: true
       };
   }
 
