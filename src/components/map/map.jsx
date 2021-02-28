@@ -2,13 +2,13 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {CitiesMap} from "../../const";
-import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
+import {getOffersByLocation, MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {connect} from "react-redux";
 
 const zoom = 12;
 
-const Map = ({locationCity, offers, mapType}) => {
+const Map = ({locationCity, offers, mapType, activeOffer}) => {
   const mapRef = useRef();
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Map = ({locationCity, offers, mapType}) => {
 
     offers.forEach((offer) => {
       const customIcon = leaflet.icon({
-        iconUrl: `img/pin.svg`,
+        iconUrl: offer.id === activeOffer ? `img/pin-active.svg` : `img/pin.svg`,
         iconSize: [30, 30]
       });
 
@@ -48,7 +48,7 @@ const Map = ({locationCity, offers, mapType}) => {
     return () => {
       mapRef.current.remove();
     };
-  }, [locationCity, offers]);
+  }, [locationCity, offers, activeOffer]);
 
   return (
     <section
@@ -62,12 +62,14 @@ const Map = ({locationCity, offers, mapType}) => {
 Map.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
   mapType: PropTypes.string.isRequired,
-  locationCity: PropTypes.string.isRequired
+  locationCity: PropTypes.string.isRequired,
+  activeOffer: PropTypes.number
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
-  locationCity: state.locationCity
+  offers: getOffersByLocation(state.offers, state.locationCity),
+  locationCity: state.locationCity,
+  activeOffer: state.activeOffer
 });
 
 

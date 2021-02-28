@@ -1,11 +1,12 @@
 import {ActionType} from "./action";
-import {INITIAL_LOCATION} from "../const";
-import {getOffersByLocation} from "../utils/place";
-
+import {INITIAL_LOCATION, INITIAL_SORT_TYPE} from "../const";
+import offers from "../mocks/offers";
 
 const initialState = {
   locationCity: INITIAL_LOCATION,
-  offers: getOffersByLocation(INITIAL_LOCATION)
+  offers,
+  sortType: INITIAL_SORT_TYPE,
+  activeOffer: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,6 +26,18 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET:
       return {
         ...initialState
+      };
+
+    case ActionType.CHANGE_SORT_TYPE:
+      return {
+        ...state,
+        sortType: action.payload
+      };
+
+    case ActionType.SET_ACTIVE_OFFER:
+      return {
+        ...state,
+        activeOffer: action.payload
       };
   }
 

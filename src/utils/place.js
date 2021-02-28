@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "../const";
-import offers from "../mocks/offers";
+// import offers from "../mocks/offers";
 
 export const PLACE_SETTINGS = {
   cities: {
@@ -99,7 +99,7 @@ export const groupByLocation = (places) => {
   }, {});
 };
 
-export const getOffersByLocation = (location) => {
+export const getOffersByLocation = (offers, location) => {
   return offers.filter((offer) => offer.city.name === location);
 };
 

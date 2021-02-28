@@ -5,7 +5,7 @@ import {capitalize} from "../../utils/common";
 import {Link} from "react-router-dom";
 import {PLACE_SETTINGS} from "../../utils/place";
 
-const Place = ({offer, cardType}) => {
+const Place = ({offer, cardType, setActive, unsetActive}) => {
   const {
     id,
     isPremium,
@@ -16,8 +16,14 @@ const Place = ({offer, cardType}) => {
     title
   } = adaptOfferToClient(offer);
 
+  const handleMouseEnter = () => setActive(offer.id);
+  const handleMouseLeave = () => unsetActive();
+
   return (
-    <article className={PLACE_SETTINGS[cardType].articleClassName}>
+    <article
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={PLACE_SETTINGS[cardType].articleClassName}>
       {
         (PLACE_SETTINGS[cardType].premiumMark && isPremium) &&
         <div className="place-card__mark">
@@ -66,6 +72,8 @@ const Place = ({offer, cardType}) => {
 Place.propTypes = {
   offer: propTypesPlace,
   cardType: PropTypes.string.isRequired,
+  setActive: PropTypes.func.isRequired,
+  unsetActive: PropTypes.func.isRequired
 };
 
 export default Place;

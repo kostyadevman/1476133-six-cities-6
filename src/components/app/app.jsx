@@ -8,7 +8,7 @@ import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {propTypesPlace} from "../../utils/place";
 import {propTypesReview} from "../../utils/review";
-import {CITIES} from "../../const";
+import {CITIES, SORT_TYPES} from "../../const";
 
 const App = ({offers, reviews, offersNearby}) => {
 
@@ -16,7 +16,7 @@ const App = ({offers, reviews, offersNearby}) => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage offers={offers} locations={CITIES} />
+          <MainPage offers={offers} locations={CITIES} sortTypes={SORT_TYPES} />
         </Route>
         <Route exact path="/favorites">
           <FavoritePlacesPage offers={offers}/>

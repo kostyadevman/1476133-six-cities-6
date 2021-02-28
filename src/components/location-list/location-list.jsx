@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {ActionCreator} from '../../store/action';
 import LocationItem from "../location-item/location-item";
-import {getOffersByLocation} from "../../utils/place";
+import {INITIAL_SORT_TYPE} from "../../const";
 
 
 const LocationList = ({locations, locationCity, onChangeLocation}) => {
@@ -28,7 +28,6 @@ LocationList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
   locationCity: state.locationCity
 });
 
@@ -36,7 +35,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onChangeLocation(location) {
     dispatch(ActionCreator.changeLocation(location));
-    dispatch(ActionCreator.changeOffers(getOffersByLocation(location)));
+    dispatch(ActionCreator.changeSortType(INITIAL_SORT_TYPE));
   }
 });
 
