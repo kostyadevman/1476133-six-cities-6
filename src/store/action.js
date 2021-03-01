@@ -1,11 +1,13 @@
 export const ActionType = {
-  CHANGE_LOCATION: `domain/changeLocation`,
-  CHANGE_OFFERS: `domain/changeOffers`,
-  RESET: `domain/reset`,
+  CHANGE_LOCATION: `main/changeLocation`,
+  CHANGE_OFFERS: `main/changeOffers`,
+  RESET: `main/reset`,
+  REDIRECT_TO_ROUTE: `main/redirectToRoute`,
   CHANGE_SORT_TYPE: `sort/changeSortType`,
   SORT: `sort/Sort`,
   SET_ACTIVE_OFFER: `place-list/setActiveOffer`,
-  LOAD_OFFERS: `data/loadOffers`
+  LOAD_OFFERS: `data/loadOffers`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
 export const ActionCreator = {
@@ -36,5 +38,15 @@ export const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
     payload: offers
+  }),
+
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   })
 };

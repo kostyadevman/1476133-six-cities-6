@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {ActionCreator} from '../../store/action';
 import LocationItem from "../location-item/location-item";
-import {INITIAL_SORT_TYPE} from "../../const";
+import {SortTypes} from "../../const";
 
 
 const LocationList = ({locations, locationCity, onChangeLocation}) => {
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onChangeLocation(location) {
     dispatch(ActionCreator.changeLocation(location));
-    dispatch(ActionCreator.changeSortType(INITIAL_SORT_TYPE));
+    dispatch(ActionCreator.changeSortType(SortTypes.POPULAR));
   }
 });
 

@@ -34,7 +34,6 @@ export const RatingMap = {
 };
 
 export const INITIAL_LOCATION = `Paris`;
-export const INITIAL_SORT_TYPE = `Popular`;
 
 export const CitiesMap = {
   Amsterdam: [52.3833, 4.9044],
@@ -43,4 +42,9 @@ export const CitiesMap = {
   Brussels: [50.8552, 4.3753],
   Hamburg: [53.5503, 10.0006],
   Dusseldorf: [51.2387, 6.8143]
+};
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
 };

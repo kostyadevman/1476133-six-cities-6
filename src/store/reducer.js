@@ -1,13 +1,14 @@
 import {ActionType} from "./action";
-import {INITIAL_LOCATION, INITIAL_SORT_TYPE} from "../const";
+import {INITIAL_LOCATION, SortTypes, AuthorizationStatus} from "../const";
 
 
 const initialState = {
   locationCity: INITIAL_LOCATION,
   offers: [],
-  sortType: INITIAL_SORT_TYPE,
+  sortType: SortTypes.POPULAR,
   activeOffer: null,
-  isOfferListLoaded: false
+  isOfferListLoaded: false,
+  authorizationStatus: AuthorizationStatus.NO_AUTH
 };
 
 const reducer = (state = initialState, action) => {
@@ -46,6 +47,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         offers: action.payload,
         isOfferListLoaded: true
+      };
+
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
   }
 
