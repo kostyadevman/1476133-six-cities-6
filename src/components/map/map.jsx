@@ -34,8 +34,8 @@ const Map = ({locationCity, offers, mapType, activeOffer}) => {
       });
 
       leaflet.marker({
-        lat: offer.city.location.latitude,
-        lng: offer.city.location.longitude
+        lat: offer.location.latitude,
+        lng: offer.location.longitude
       },
       {
         icon: customIcon

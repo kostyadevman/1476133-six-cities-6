@@ -4,7 +4,8 @@ export const ActionType = {
   RESET: `domain/reset`,
   CHANGE_SORT_TYPE: `sort/changeSortType`,
   SORT: `sort/Sort`,
-  SET_ACTIVE_OFFER: `place-list/setActiveOffer`
+  SET_ACTIVE_OFFER: `place-list/setActiveOffer`,
+  LOAD_OFFERS: `data/loadOffers`
 };
 
 export const ActionCreator = {
@@ -30,5 +31,10 @@ export const ActionCreator = {
   setActiveOffer: (id) => ({
     type: ActionType.SET_ACTIVE_OFFER,
     payload: id
+  }),
+
+  loadOffers: (offers) => ({
+    type: ActionType.LOAD_OFFERS,
+    payload: offers
   })
 };
