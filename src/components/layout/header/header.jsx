@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
+import {AuthorizationStatus} from "../../../const";
 
-const Header = (props) => {
-  const {userName} = props;
+const Header = ({userName, authorizationStatus}) => {
+  const history = useHistory();
+
+  const handleLinkClick = (evt) => {
+    evt.preventDefault();
+    history.push(`/favorites`);
+  };
 
   return (
     <header className="header">
@@ -16,10 +24,11 @@ const Header = (props) => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <a className="header__nav-link header__nav-link--profile" href="#">
+                <a className="header__nav-link header__nav-link--profile" href="#"
+                  onClick={handleLinkClick}>
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  {userName ?
+                  {authorizationStatus === AuthorizationStatus.AUTH ?
                     <span className="header__user-name user__name">{userName}</span> :
                     <span className="header__login">Sign in</span>
                   }
@@ -35,6 +44,14 @@ const Header = (props) => {
 
 Header.propTypes = {
   userName: PropTypes.string,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
-export default Header;
+
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+
+
+export {Header};
+export default connect(mapStateToProps)(Header);
