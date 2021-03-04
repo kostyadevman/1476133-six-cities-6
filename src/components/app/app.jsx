@@ -13,15 +13,13 @@ import {connect} from "react-redux";
 import {fetchOfferList} from "../../store/api-actions";
 import Spinner from "../spinner/spinner";
 import PrivateRoute from "../private-route/private-route";
-import {CITIES, SORT_TYPES} from "../../const";
+import {CITIES, SORT_TYPES, AppRoute} from "../../const";
 
 const App = (props) => {
   const {
     offers,
-    reviews,
-    offersNearby,
     onLoadData,
-    isOfferListLoaded
+    isOfferListLoaded,
   } = props;
 
   useEffect(() => {
@@ -38,31 +36,21 @@ const App = (props) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           <MainPage locations={CITIES} sortTypes={SORT_TYPES} />
         </Route>
         <PrivateRoute
           exact
-          path="/favorites"
+          path={AppRoute.FAVORITES}
           render={() => <FavoritePlacesPage offers={offers} />}
         >
         </PrivateRoute>
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <AuthPage />
         </Route>
-        <Route exact path="/offer/:id"
-          render={({match}) => {
-            const {id} = match.params;
-            const offer = offers.find((place) => {
-              return place.id === parseInt(id, 10);
-            });
-            return <PlaceDetailPage
-              offer={offer}
-              reviews={reviews}
-              offersNearby={offersNearby}
-            />;
-          }}
-        />
+        <Route exact path={AppRoute.OFFER}>
+          <PlaceDetailPage />;
+        </Route>
         <Route>
           <NotFoundPage/>
         </Route>
@@ -78,7 +66,6 @@ App.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   isOfferListLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  onCheckAuth: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

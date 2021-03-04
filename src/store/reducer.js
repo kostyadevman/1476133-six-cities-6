@@ -1,14 +1,18 @@
 import {ActionType} from "./action";
-import {INITIAL_LOCATION, SortTypes, AuthorizationStatus} from "../const";
+import {INITIAL_LOCATION, SortTypes, AuthorizationStatus, EMPTY_OFFER} from "../const";
 
 
 const initialState = {
   locationCity: INITIAL_LOCATION,
   offers: [],
+  isOfferListLoaded: false,
   sortType: SortTypes.POPULAR,
   activeOffer: null,
-  isOfferListLoaded: false,
-  authorizationStatus: AuthorizationStatus.NO_AUTH
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  offer: EMPTY_OFFER,
+  comments: [],
+  offersNearby: [],
+  errorMessage: null
 };
 
 const reducer = (state = initialState, action) => {
@@ -49,10 +53,40 @@ const reducer = (state = initialState, action) => {
         isOfferListLoaded: true
       };
 
+    case ActionType.LOAD_OFFER:
+      return {
+        ...state,
+        offer: action.payload,
+      };
+
+    case ActionType.LOAD_OFFERS_NEARBY:
+      return {
+        ...state,
+        offersNearby: action.payload
+      };
+
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        comments: action.payload,
+      };
+
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
         ...state,
         authorizationStatus: action.payload,
+      };
+
+    case ActionType.SET_ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: action.payload
+      };
+
+    case ActionType.UNSET_ERROR_MESSAGE:
+      return {
+        ...state,
+        errorMessage: action.payload
       };
   }
 

@@ -7,7 +7,13 @@ export const ActionType = {
   SORT: `sort/Sort`,
   SET_ACTIVE_OFFER: `place-list/setActiveOffer`,
   LOAD_OFFERS: `data/loadOffers`,
+  LOAD_OFFER: `data/loadOffer`,
+  LOAD_COMMENTS: `data/loadComments`,
+  LOAD_OFFERS_NEARBY: `data/loadOffersNearby`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SEND_REVIEW: `data/sendReview`,
+  SET_ERROR_MESSAGE: `notify/setErrorMessage`,
+  UNSET_ERROR_MESSAGE: `notify/unsetErrorMessage`
 };
 
 export const ActionCreator = {
@@ -40,6 +46,21 @@ export const ActionCreator = {
     payload: offers
   }),
 
+  loadOffer: (offer) => ({
+    type: ActionType.LOAD_OFFER,
+    payload: offer
+  }),
+
+  loadComments: (comments) => ({
+    type: ActionType.LOAD_COMMENTS,
+    payload: comments
+  }),
+
+  loadOffersNearby: (offers) => ({
+    type: ActionType.LOAD_OFFERS_NEARBY,
+    payload: offers
+  }),
+
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
@@ -48,5 +69,15 @@ export const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
+  }),
+
+  setErrorMessage: (message) => ({
+    type: ActionType.SET_ERROR_MESSAGE,
+    payload: message,
+  }),
+
+  unsetErrorMessage: () => ({
+    type: ActionType.UNSET_ERROR_MESSAGE,
+    payload: null
   })
 };

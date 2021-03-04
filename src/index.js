@@ -13,6 +13,7 @@ import {AuthorizationStatus} from "./const";
 import {ActionCreator} from "./store/action";
 import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middlewares/redirect";
+import Error from "./components/error/error";
 
 const api = createAPI(
     () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH))
@@ -31,6 +32,7 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
+      <Error />
       <App
         reviews={reviews}
         offersNearby={offersNearby}

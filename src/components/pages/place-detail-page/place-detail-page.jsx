@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {useParams} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
@@ -8,9 +9,17 @@ import Reviews from "../../reviews/reviews";
 import PlaceList from "../../place-list/place-list";
 import {MapType, PlaceListType} from "../../../const";
 import Map from "../../map/map";
+import {connect} from "react-redux";
+import {fetchComments, fetchOffer, fetchOffersNearby} from "../../../store/api-actions";
 
 
-const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
+const PlaceDetailPage = ({offer, comments, offersNearby, onLoadData}) => {
+  const {id} = useParams();
+
+  useEffect(() => {
+    onLoadData(id);
+  }, []);
+
   const {
     isPremiun,
     price,
@@ -24,6 +33,7 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
     title,
     host
   } = adaptOfferToClient(offer);
+
 
   const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
   return (
@@ -105,7 +115,7 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviews} />
+              <Reviews reviews={comments} />
             </div>
           </div>
           <Map offers={offersNearby} mapType={MapType.NEAR}/>
@@ -123,8 +133,24 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
 
 PlaceDetailPage.propTypes = {
   offer: propTypesPlace.isRequired,
-  reviews: PropTypes.arrayOf(propTypesReview).isRequired,
-  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired
+  comments: PropTypes.arrayOf(propTypesReview).isRequired,
+  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
+const mapStateToProps = (state) => ({
+  offer: state.offer,
+  isOfferLoaded: state.isOfferLoaded,
+  comments: state.comments,
+  offersNearby: state.offersNearby,
+});
 
-export default PlaceDetailPage;
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchOffer(id));
+    dispatch(fetchComments(id));
+    dispatch(fetchOffersNearby(id));
+  }
+});
+
+export {PlaceDetailPage};
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetailPage);

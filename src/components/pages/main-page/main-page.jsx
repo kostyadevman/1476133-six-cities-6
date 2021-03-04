@@ -12,7 +12,6 @@ import Sort from "../../sort/sort";
 
 
 const MainPage = ({offers, locations, sortTypes, locationCity}) => {
-
   return (
     <div className="page page--gray page--main">
 
@@ -47,7 +46,7 @@ MainPage.propTypes = {
   locationCity: PropTypes.string.isRequired,
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
   locations: PropTypes.array.isRequired,
-  sortTypes: PropTypes.array.isRequired
+  sortTypes: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({

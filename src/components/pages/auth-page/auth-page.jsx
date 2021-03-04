@@ -1,16 +1,14 @@
 import React, {useRef} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Header from "../../layout/header/header";
 import {login} from "../../../store/api-actions";
-import {CITIES} from "../../../const";
+import {CITIES, AppRoute} from "../../../const";
 
 const AuthPage = ({locationCity, onSubmit}) => {
   const loginRef = useRef();
   const passwordRef = useRef();
-
-  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -19,11 +17,6 @@ const AuthPage = ({locationCity, onSubmit}) => {
       login: loginRef.current.value,
       password: passwordRef.current.value,
     });
-  };
-
-  const handleLinkClick = (evt) => {
-    evt.preventDefault();
-    history.push(`/`);
   };
 
   return (
@@ -68,9 +61,9 @@ const AuthPage = ({locationCity, onSubmit}) => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#" onClick={handleLinkClick}>
+              <Link to={AppRoute.ROOT} className="locations__item-link" href="#">
                 <span>{locationCity}</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>
