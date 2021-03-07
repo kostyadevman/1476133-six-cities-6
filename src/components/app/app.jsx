@@ -7,19 +7,21 @@ import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-pa
 import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {propTypesPlace} from "../../utils/place";
-import {propTypesReview} from "../../utils/review";
 import browserHistory from "../../browser-history";
 import {connect} from "react-redux";
 import {fetchOfferList} from "../../store/api-actions";
 import Spinner from "../spinner/spinner";
-import PrivateRoute from "../private-route/private-route";
-import {CITIES, SORT_TYPES, AppRoute} from "../../const";
+import {CITIES, SORT_TYPES, AppRoute, AuthorizationStatus} from "../../const";
+import withPrivateRoute from "../with-private-route/with-private-route";
+import withSpinner from "../with-spinner/with-spinner";
+
 
 const App = (props) => {
   const {
     offers,
     onLoadData,
     isOfferListLoaded,
+    authorizationStatus
   } = props;
 
   useEffect(() => {
@@ -32,6 +34,13 @@ const App = (props) => {
     return <Spinner />;
   }
 
+  const SignInPagePrivate = withPrivateRoute(AuthPage, authorizationStatus === AuthorizationStatus.NO_AUTH);
+  const FavoritesPagePrivate = withPrivateRoute(
+      FavoritePlacesPage,
+      authorizationStatus === AuthorizationStatus.AUTH,
+      AppRoute.LOGIN
+  );
+  const PlaceDetailPageWithSpinner = withSpinner(PlaceDetailPage);
 
   return (
     <BrowserRouter history={browserHistory}>
@@ -39,17 +48,14 @@ const App = (props) => {
         <Route exact path={AppRoute.ROOT}>
           <MainPage locations={CITIES} sortTypes={SORT_TYPES} />
         </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.FAVORITES}
-          render={() => <FavoritePlacesPage offers={offers} />}
-        >
-        </PrivateRoute>
+        <Route exact path={AppRoute.FAVORITES}>
+          <FavoritesPagePrivate offers={offers} />
+        </Route>
         <Route exact path={AppRoute.LOGIN}>
-          <AuthPage />
+          <SignInPagePrivate />
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <PlaceDetailPage />;
+          <PlaceDetailPageWithSpinner />;
         </Route>
         <Route>
           <NotFoundPage/>
@@ -61,8 +67,6 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
-  reviews: PropTypes.arrayOf(propTypesReview).isRequired,
-  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
   onLoadData: PropTypes.func.isRequired,
   isOfferListLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,

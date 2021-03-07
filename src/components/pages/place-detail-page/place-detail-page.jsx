@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
-import {adaptOfferToClient, makeRatingScore, propTypesPlace} from "../../../utils/place";
+import {makeRatingScore, propTypesPlace} from "../../../utils/place";
 import {propTypesReview} from '../../../utils/review';
 import Reviews from "../../reviews/reviews";
 import PlaceList from "../../place-list/place-list";
@@ -11,17 +11,22 @@ import {MapType, PlaceListType} from "../../../const";
 import Map from "../../map/map";
 import {connect} from "react-redux";
 import {fetchComments, fetchOffer, fetchOffersNearby} from "../../../store/api-actions";
+import {ActionCreator} from "../../../store/action";
 
 
-const PlaceDetailPage = ({offer, comments, offersNearby, onLoadData}) => {
+// eslint-disable-next-line no-unused-vars
+const PlaceDetailPage = ({offer, comments, offersNearby, onLoadOffer, onLoadData, onLoading, isLoading}) => {
   const {id} = useParams();
 
   useEffect(() => {
+    onLoading(true);
+    onLoadOffer(id)
+      .then(() => onLoading(false));
     onLoadData(id);
   }, []);
 
   const {
-    isPremiun,
+    isPremium,
     price,
     type,
     rating,
@@ -32,7 +37,7 @@ const PlaceDetailPage = ({offer, comments, offersNearby, onLoadData}) => {
     images,
     title,
     host
-  } = adaptOfferToClient(offer);
+  } = offer;
 
 
   const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
@@ -54,7 +59,7 @@ const PlaceDetailPage = ({offer, comments, offersNearby, onLoadData}) => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremiun && <div className="property__mark">
+              {isPremium && <div className="property__mark">
                 <span>Premium</span>
               </div> }
               <div className="property__name-wrapper">
@@ -135,21 +140,30 @@ PlaceDetailPage.propTypes = {
   offer: propTypesPlace.isRequired,
   comments: PropTypes.arrayOf(propTypesReview).isRequired,
   offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
+  onLoading: PropTypes.func.isRequired,
+  onLoadOffer: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired
 };
 const mapStateToProps = (state) => ({
   offer: state.offer,
-  isOfferLoaded: state.isOfferLoaded,
   comments: state.comments,
   offersNearby: state.offersNearby,
+  isLoading: state.isOfferLoading
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onLoadOffer(id) {
+    return dispatch(fetchOffer(id));
+  },
   onLoadData(id) {
-    dispatch(fetchOffer(id));
     dispatch(fetchComments(id));
     dispatch(fetchOffersNearby(id));
+  },
+  onLoading(isLoading) {
+    dispatch(ActionCreator.setOfferLoading(isLoading));
   }
+
 });
 
 export {PlaceDetailPage};

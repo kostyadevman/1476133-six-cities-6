@@ -78,22 +78,22 @@ export const EMPTY_OFFER = {
       "zoom": 0
     }
   },
-  "preview_image": ``,
+  "previewImage": ``,
   "images": [],
   "title": ``,
-  "is_favorite": false,
-  "is_premium": false,
+  "isFavorite": false,
+  "isPremium": false,
   "rating": 0,
   "type": `room`,
   "bedrooms": 0,
-  "max_adults": 0,
+  "maxAdults": 0,
   "price": 0,
   "goods": [],
   "host": {
     "id": 0,
     "name": ``,
-    "is_pro": false,
-    "avatar_url": ``
+    "isPro": false,
+    "avatarUrl": ``
   },
   "description": ``,
   "location": {

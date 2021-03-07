@@ -6,8 +6,6 @@ import {createAPI} from "./services/api";
 import {Provider} from "react-redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import App from './components/app/app';
-import reviews from "./mocks/reviews";
-import offersNearby from "./mocks/offers-nearby";
 import {reducer} from "./store/reducer";
 import {AuthorizationStatus} from "./const";
 import {ActionCreator} from "./store/action";
@@ -33,10 +31,7 @@ store.dispatch(checkAuth());
 ReactDOM.render(
     <Provider store={store}>
       <Error />
-      <App
-        reviews={reviews}
-        offersNearby={offersNearby}
-      />
+      <App />
     </Provider>,
     document.querySelector(`#root`)
 );

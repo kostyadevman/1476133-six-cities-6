@@ -8,7 +8,9 @@ export const fetchOfferList = () => (dispatch, _getState, api) => (
 
 export const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFER.replace(`:id`, id))
-    .then(({data}) => dispatch(ActionCreator.loadOffer(data)))
+    .then(({data}) => {
+      dispatch(ActionCreator.loadOffer(data));
+    })
     .catch(() => dispatch(ActionCreator.redirectToRoute(AppRoute.PAGE_NOT_FOUND)))
 );
 
@@ -34,11 +36,6 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
     .then(() => dispatch(ActionCreator.redirectToRoute(AppRoute.FAVORITES)))
 );
 
-export const sendReview = (id, {comment, rating}, onSuccess, onFail) => (dispatch, _getState, api) => (
-  api.post(APIRoute.COMMENTS.replace(`:idd`, id), {comment, rating})
-    .then(() => onSuccess())
-    .catch(() => {
-      dispatch(ActionCreator.setErrorMessage(`Failed to post data`));
-      onFail();
-    })
+export const sendReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
+  api.post(APIRoute.COMMENTS.replace(`:id`, id), {comment, rating})
 );

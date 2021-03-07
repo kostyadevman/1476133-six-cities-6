@@ -4,10 +4,11 @@ import {connect} from "react-redux";
 import Rating from "../rating/rating";
 import ReviewContent from "../review-content/review-content";
 import {sendReview} from "../../store/api-actions";
+import {ActionCreator} from "../../store/action";
 import {AuthorizationStatus, RATINIG_INIT} from "../../const";
 
 
-const CommentForm = ({authorizationStatus, id, onSubmit}) => {
+const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
   const commentRef = useRef();
 
   const [readonly, setReadonly] = useState(false);
@@ -30,7 +31,12 @@ const CommentForm = ({authorizationStatus, id, onSubmit}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setReadonly(true);
-    onSubmit(id, {rating, comment}, onSuccess, onFail);
+    onSubmit(id, {rating, comment})
+      .then(() => onSuccess())
+      .catch(() => {
+        onFail();
+        showErrorMessage(`Failed to post data`);
+      });
   };
 
   const handleRatingChange = (value) => {
@@ -41,11 +47,9 @@ const CommentForm = ({authorizationStatus, id, onSubmit}) => {
     setComment(value);
   };
 
-  if (authorizationStatus !== AuthorizationStatus.AUTH) {
-    return null;
-  }
 
   return (
+    authorizationStatus === AuthorizationStatus.AUTH &&
     <form
       ref={commentRef}
       className="reviews__form form" onSubmit={handleSubmit}
@@ -71,6 +75,7 @@ const CommentForm = ({authorizationStatus, id, onSubmit}) => {
 
 CommentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  showErrorMessage: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   authorizationStatus: PropTypes.string.isRequired
 };
@@ -81,8 +86,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data, onSuccess, onFail) {
-    dispatch(sendReview(id, data, onSuccess, onFail));
+  onSubmit(id, data) {
+    return dispatch(sendReview(id, data));
+  },
+  showErrorMessage(message) {
+    dispatch(ActionCreator.setErrorMessage(message));
   }
 });
 

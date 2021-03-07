@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {adaptOfferToClient, makeRatingScore, propTypesPlace} from "../../utils/place";
+import {makeRatingScore, propTypesPlace} from "../../utils/place";
 import {capitalize} from "../../utils/common";
 import {Link} from "react-router-dom";
 import {PLACE_SETTINGS} from "../../utils/place";
@@ -14,7 +14,7 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
     type,
     rating,
     title
-  } = adaptOfferToClient(offer);
+  } = offer;
 
   const handleMouseEnter = () => setActive(offer.id);
   const handleMouseLeave = () => unsetActive();

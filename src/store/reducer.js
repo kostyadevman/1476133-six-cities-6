@@ -10,6 +10,7 @@ const initialState = {
   activeOffer: null,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   offer: EMPTY_OFFER,
+  isOfferLoading: true,
   comments: [],
   offersNearby: [],
   errorMessage: null
@@ -87,6 +88,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         errorMessage: action.payload
+      };
+
+    case ActionType.SET_OFFER_LOADIGN:
+      return {
+        ...state,
+        isOfferLoading: action.payload
       };
   }
 

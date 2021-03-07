@@ -17,7 +17,9 @@ const ReviewContent = ({onContentChange, readonly}) => {
       className="reviews__textarea form__textarea"
       id="review"
       name="review"
-      placeholder="Tell how was your stay, what you like and what can be improved"/>
+      placeholder="Tell how was your stay, what you like and what can be improved"
+      required={true}
+    />
   );
 };
 
