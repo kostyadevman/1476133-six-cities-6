@@ -4,7 +4,6 @@ import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import MainPage from "../pages/main-page/main-page";
 import AuthPage from "../pages/auth-page/auth-page";
 import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-page";
-import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {propTypesPlace} from "../../utils/place";
 import browserHistory from "../../browser-history";
@@ -13,7 +12,7 @@ import {fetchOfferList} from "../../store/api-actions";
 import Spinner from "../spinner/spinner";
 import {CITIES, SORT_TYPES, AppRoute, AuthorizationStatus} from "../../const";
 import withPrivateRoute from "../with-private-route/with-private-route";
-import withSpinner from "../with-spinner/with-spinner";
+import PlaceDetailPageWrapper from "../pages/place-detail-page-wrapper/place-detail-page-wrapper";
 
 
 const App = (props) => {
@@ -21,7 +20,7 @@ const App = (props) => {
     offers,
     onLoadData,
     isOfferListLoaded,
-    authorizationStatus
+    authorizationStatus,
   } = props;
 
   useEffect(() => {
@@ -40,7 +39,6 @@ const App = (props) => {
       authorizationStatus === AuthorizationStatus.AUTH,
       AppRoute.LOGIN
   );
-  const PlaceDetailPageWithSpinner = withSpinner(PlaceDetailPage);
 
   return (
     <BrowserRouter history={browserHistory}>
@@ -55,7 +53,7 @@ const App = (props) => {
           <SignInPagePrivate />
         </Route>
         <Route exact path={AppRoute.OFFER}>
-          <PlaceDetailPageWithSpinner />;
+          <PlaceDetailPageWrapper />;
         </Route>
         <Route>
           <NotFoundPage/>
@@ -75,7 +73,7 @@ App.propTypes = {
 const mapStateToProps = (state) => ({
   offers: state.offers,
   isOfferListLoaded: state.isOfferListLoaded,
-  authorizationStatus: state.authorizationStatus
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
