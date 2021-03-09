@@ -2,6 +2,10 @@ export const CITIES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `
 export const PLACE_TYPE = [`apartment`, `room`, `house`, `hotel`];
 export const SORT_TYPES = [`Popular`, `Price: low to high`, `Price: high to low`, `Top rated first`];
 export const MAX_RATING = 5;
+export const RATINIG_INIT = 0;
+export const REVIEW_LENGTH_MIN = 50;
+export const REVIEW_LENGTH_MAX = 300;
+
 
 export const SortTypes = {
   POPULAR: `Popular`,
@@ -47,4 +51,55 @@ export const CitiesMap = {
 export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
+};
+
+export const AppRoute = {
+  LOGIN: `/login`,
+  ROOT: `/`,
+  FAVORITES: `/favorites`,
+  OFFER: `/offer/:id`,
+  PAGE_NOT_FOUND: `/page-not-found`
+};
+
+export const APIRoute = {
+  OFFERS: `/hotels`,
+  LOGIN: `/login`,
+  OFFER: `/hotels/:id`,
+  COMMENTS: `/comments/:id`,
+  NEARBY: `/hotels/:id/nearby`
+};
+
+export const EMPTY_OFFER = {
+  "city": {
+    "name": `Paris`,
+    "location": {
+      "latitude": 0,
+      "longitude": 0,
+      "zoom": 0
+    }
+  },
+  "previewImage": ``,
+  "images": [],
+  "title": ``,
+  "isFavorite": false,
+  "isPremium": false,
+  "rating": 0,
+  "type": `room`,
+  "bedrooms": 0,
+  "maxAdults": 0,
+  "price": 0,
+  "goods": [],
+  "host": {
+    "id": 0,
+    "name": ``,
+    "isPro": false,
+    "avatarUrl": ``
+  },
+  "description": ``,
+  "location": {
+    "latitude": 0,
+    "longitude": 0,
+    "zoom": 0
+  },
+  "id": 0
 };

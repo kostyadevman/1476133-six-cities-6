@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
-import {adaptOfferToClient, makeRatingScore, propTypesPlace} from "../../../utils/place";
+import {makeRatingScore, propTypesPlace} from "../../../utils/place";
 import {propTypesReview} from '../../../utils/review';
 import Reviews from "../../reviews/reviews";
 import PlaceList from "../../place-list/place-list";
+import withSpinner from "../../with-spinner/with-spinner";
 import {MapType, PlaceListType} from "../../../const";
 import Map from "../../map/map";
 
+const PlaceDetailPage = ({offer, comments, offersNearby}) => {
 
-const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
   const {
-    isPremiun,
+    isPremium,
     price,
     type,
     rating,
@@ -23,7 +24,8 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
     images,
     title,
     host
-  } = adaptOfferToClient(offer);
+  } = offer;
+
 
   const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
   return (
@@ -44,7 +46,7 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremiun && <div className="property__mark">
+              {isPremium && <div className="property__mark">
                 <span>Premium</span>
               </div> }
               <div className="property__name-wrapper">
@@ -105,7 +107,7 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
                   </p>
                 </div>
               </div>
-              <Reviews reviews={reviews} />
+              <Reviews reviews={comments} />
             </div>
           </div>
           <Map offers={offersNearby} mapType={MapType.NEAR}/>
@@ -123,8 +125,9 @@ const PlaceDetailPage = ({offer, reviews, offersNearby}) => {
 
 PlaceDetailPage.propTypes = {
   offer: propTypesPlace.isRequired,
-  reviews: PropTypes.arrayOf(propTypesReview).isRequired,
-  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired
+  comments: PropTypes.arrayOf(propTypesReview).isRequired,
+  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
 };
 
-export default PlaceDetailPage;
+export {PlaceDetailPage};
+export default withSpinner(PlaceDetailPage);

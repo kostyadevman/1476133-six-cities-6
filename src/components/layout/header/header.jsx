@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {AuthorizationStatus} from "../../../const";
+import {AuthorizationStatus, AppRoute} from "../../../const";
 
 const Header = ({userName, authorizationStatus}) => {
   const history = useHistory();
 
   const handleLinkClick = (evt) => {
     evt.preventDefault();
-    history.push(`/favorites`);
+    history.push(AppRoute.FAVORITES);
   };
 
   return (

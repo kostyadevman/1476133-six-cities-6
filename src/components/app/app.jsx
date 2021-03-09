@@ -4,24 +4,23 @@ import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import MainPage from "../pages/main-page/main-page";
 import AuthPage from "../pages/auth-page/auth-page";
 import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-page";
-import PlaceDetailPage from "../pages/place-detail-page/place-detail-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
 import {propTypesPlace} from "../../utils/place";
-import {propTypesReview} from "../../utils/review";
 import browserHistory from "../../browser-history";
 import {connect} from "react-redux";
 import {fetchOfferList} from "../../store/api-actions";
 import Spinner from "../spinner/spinner";
-import PrivateRoute from "../private-route/private-route";
-import {CITIES, SORT_TYPES} from "../../const";
+import {CITIES, SORT_TYPES, AppRoute, AuthorizationStatus} from "../../const";
+import withPrivateRoute from "../with-private-route/with-private-route";
+import PlaceDetailPageWrapper from "../pages/place-detail-page-wrapper/place-detail-page-wrapper";
+
 
 const App = (props) => {
   const {
     offers,
-    reviews,
-    offersNearby,
     onLoadData,
-    isOfferListLoaded
+    isOfferListLoaded,
+    authorizationStatus,
   } = props;
 
   useEffect(() => {
@@ -34,35 +33,28 @@ const App = (props) => {
     return <Spinner />;
   }
 
+  const SignInPagePrivate = withPrivateRoute(AuthPage, authorizationStatus === AuthorizationStatus.NO_AUTH);
+  const FavoritesPagePrivate = withPrivateRoute(
+      FavoritePlacesPage,
+      authorizationStatus === AuthorizationStatus.AUTH,
+      AppRoute.LOGIN
+  );
 
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           <MainPage locations={CITIES} sortTypes={SORT_TYPES} />
         </Route>
-        <PrivateRoute
-          exact
-          path="/favorites"
-          render={() => <FavoritePlacesPage offers={offers} />}
-        >
-        </PrivateRoute>
-        <Route exact path="/login">
-          <AuthPage />
+        <Route exact path={AppRoute.FAVORITES}>
+          <FavoritesPagePrivate offers={offers} />
         </Route>
-        <Route exact path="/offer/:id"
-          render={({match}) => {
-            const {id} = match.params;
-            const offer = offers.find((place) => {
-              return place.id === parseInt(id, 10);
-            });
-            return <PlaceDetailPage
-              offer={offer}
-              reviews={reviews}
-              offersNearby={offersNearby}
-            />;
-          }}
-        />
+        <Route exact path={AppRoute.LOGIN}>
+          <SignInPagePrivate />
+        </Route>
+        <Route exact path={AppRoute.OFFER}>
+          <PlaceDetailPageWrapper />;
+        </Route>
         <Route>
           <NotFoundPage/>
         </Route>
@@ -73,18 +65,15 @@ const App = (props) => {
 
 App.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
-  reviews: PropTypes.arrayOf(propTypesReview).isRequired,
-  offersNearby: PropTypes.arrayOf(propTypesPlace).isRequired,
   onLoadData: PropTypes.func.isRequired,
   isOfferListLoaded: PropTypes.bool.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  onCheckAuth: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
   isOfferListLoaded: state.isOfferListLoaded,
-  authorizationStatus: state.authorizationStatus
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

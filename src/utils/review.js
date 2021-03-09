@@ -25,12 +25,21 @@ export const adaptReviewToServer = (review) => {
       {},
       review,
       {
-
+        user: Object.assign(
+            {},
+            review.user,
+            {
+              // eslint-disable-next-line camelcase
+              avatar_url: review.user.avatarUrl,
+              // eslint-disable-next-line camelcase
+              is_pro: review.user.isPro
+            }
+        )
       }
   );
 
-  delete adaptedReview.user.avatar_url;
-  delete adaptedReview.user.is_pro;
+  delete adaptedReview.user.avatarUrl;
+  delete adaptedReview.user.isPro;
 
   return adaptedReview;
 };

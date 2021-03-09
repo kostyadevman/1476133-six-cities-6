@@ -1,23 +1,31 @@
-import React, {useState} from 'react';
+import React from "react";
+import PropTypes from "prop-types";
+import {REVIEW_LENGTH_MAX, REVIEW_LENGTH_MIN} from "../../const";
 
-const ReviewContent = () => {
+const ReviewContent = ({onContentChange, readonly}) => {
 
-  const [review, setReview] = useState(``);
-
-  const handleFieldChange = (evt) => {
-    evt.preventDefault();
-    setReview(evt.target.value);
+  const handleChange = (evt) => {
+    onContentChange(evt.target.value);
   };
 
   return (
     <textarea
-      onChange={handleFieldChange}
+      disabled={readonly}
+      maxLength={REVIEW_LENGTH_MAX}
+      minLength={REVIEW_LENGTH_MIN}
+      onChange={handleChange}
       className="reviews__textarea form__textarea"
       id="review"
       name="review"
-      value={review}
-      placeholder="Tell how was your stay, what you like and what can be improved"/>
+      placeholder="Tell how was your stay, what you like and what can be improved"
+      required={true}
+    />
   );
+};
+
+ReviewContent.propTypes = {
+  onContentChange: PropTypes.func.isRequired,
+  readonly: PropTypes.bool.isRequired
 };
 
 export default ReviewContent;

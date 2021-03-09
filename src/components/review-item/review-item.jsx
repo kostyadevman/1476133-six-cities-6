@@ -1,9 +1,9 @@
 import React from 'react';
-import {propTypesReview, adaptReviewToClient, getDate} from "../../utils/review";
+import {propTypesReview, getDate} from "../../utils/review";
 import {makeRatingScore} from "../../utils/place";
 
 const ReviewItem = ({review}) => {
-  const {user, rating, comment, date} = adaptReviewToClient(review);
+  const {user, rating, comment, date} = review;
 
   return (
     <li className="reviews__item">

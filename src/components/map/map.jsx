@@ -41,7 +41,7 @@ const Map = ({locationCity, offers, mapType, activeOffer}) => {
         icon: customIcon
       })
       .addTo(mapRef.current)
-      .bindPopup(offer.city.name);
+      .bindPopup(offer.title);
 
 
     });
@@ -54,7 +54,6 @@ const Map = ({locationCity, offers, mapType, activeOffer}) => {
     <section
       id="map"
       className={MAP_SETTINGS[mapType].className}
-      ref={mapRef}
     />
   );
 };
