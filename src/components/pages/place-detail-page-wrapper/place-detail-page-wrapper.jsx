@@ -2,19 +2,16 @@ import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import PlaceDetailPage from "../place-detail-page/place-detail-page";
 import {fetchComments, fetchOffer, fetchOffersNearby} from "../../../store/api-actions";
-import {ActionCreator} from "../../../store/action";
 import {connect} from "react-redux";
 import {propTypesPlace} from "../../../utils/place";
 import {useParams} from "react-router-dom";
 import {propTypesReview} from "../../../utils/review";
 
-const PlaceDetailPageWrapper = ({offer, comments, offersNearby, isLoading, onLoadOffer, onLoadData, setIsLoading}) => {
+const PlaceDetailPageWrapper = ({offer, comments, offersNearby, isLoading, onLoadOffer, onLoadData}) => {
   const {id} = useParams();
 
   useEffect(() => {
-    setIsLoading(true);
-    onLoadOffer(id)
-      .then(() => setIsLoading(false));
+    onLoadOffer(id);
     onLoadData(id);
   }, []);
 
@@ -36,7 +33,6 @@ PlaceDetailPageWrapper.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   onLoadOffer: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  setIsLoading: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -48,15 +44,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadOffer(id) {
-    return dispatch(fetchOffer(id));
+    dispatch(fetchOffer(id));
   },
   onLoadData(id) {
     dispatch(fetchComments(id));
     dispatch(fetchOffersNearby(id));
   },
-  setIsLoading(isOfferLoading) {
-    dispatch(ActionCreator.setOfferLoading(isOfferLoading));
-  }
 });
 
 export {PlaceDetailPageWrapper};

@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import {getArrayFromOneToN} from "../../utils/common";
 import {MAX_RATING, RatingMap} from "../../const";
 
-const Rating = ({onRatinChange, readonly}) => {
+const Rating = ({rating, onRatinChange, readonly}) => {
 
   const handleChange = (evt) => {
-    onRatinChange(evt.target.value);
+    onRatinChange(parseInt(evt.target.value, 10));
   };
 
   return (
@@ -23,6 +23,7 @@ const Rating = ({onRatinChange, readonly}) => {
               id={`${ratingScore}-start`}
               type="radio"
               required={true}
+              checked={rating === ratingScore}
             />
             <label
               htmlFor={`${ratingScore}-start`}
@@ -42,6 +43,7 @@ const Rating = ({onRatinChange, readonly}) => {
 };
 
 Rating.propTypes = {
+  rating: PropTypes.number.isRequired,
   onRatinChange: PropTypes.func.isRequired,
   readonly: PropTypes.bool.isRequired
 };

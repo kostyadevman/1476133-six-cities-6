@@ -15,13 +15,7 @@ import withPrivateRoute from "../with-private-route/with-private-route";
 import PlaceDetailPageWrapper from "../pages/place-detail-page-wrapper/place-detail-page-wrapper";
 
 
-const App = (props) => {
-  const {
-    offers,
-    onLoadData,
-    isOfferListLoaded,
-    authorizationStatus,
-  } = props;
+const App = ({offers, onLoadData, isOfferListLoaded, authorizationStatus}) => {
 
   useEffect(() => {
     if (!isOfferListLoaded) {
