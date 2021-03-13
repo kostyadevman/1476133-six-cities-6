@@ -2,13 +2,17 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {CitiesMap} from "../../const";
-import {getOffersByLocation, MAP_SETTINGS, propTypesPlace} from "../../utils/place";
+import {MAP_SETTINGS} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
+import {getFilteredOffers} from "../../store/data/selectors";
 
 const zoom = 12;
 
-const Map = ({locationCity, offers, mapType, activeOffer}) => {
+const Map = ({mapType}) => {
+  const {locationCity, activeOffer} = useSelector((state) => state.APP);
+  const offers = useSelector(getFilteredOffers);
+
   const mapRef = useRef();
 
   useEffect(() => {
@@ -59,19 +63,8 @@ const Map = ({locationCity, offers, mapType, activeOffer}) => {
 };
 
 Map.propTypes = {
-  offers: PropTypes.arrayOf(propTypesPlace).isRequired,
   mapType: PropTypes.string.isRequired,
-  locationCity: PropTypes.string.isRequired,
-  activeOffer: PropTypes.number
 };
 
-const mapStateToProps = (state) => ({
-  offers: getOffersByLocation(state.offers, state.locationCity),
-  locationCity: state.locationCity,
-  activeOffer: state.activeOffer
-});
-
-
-export {Map};
-export default connect(mapStateToProps, null)(Map);
+export default Map;
 

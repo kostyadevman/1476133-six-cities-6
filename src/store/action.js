@@ -1,92 +1,93 @@
+import {createAction} from '@reduxjs/toolkit';
 import {adaptOfferToClient} from "../utils/place";
 import {adaptReviewToClient} from "../utils/review";
 
 export const ActionType = {
-  CHANGE_LOCATION: `main/changeLocation`,
-  CHANGE_OFFERS: `main/changeOffers`,
-  RESET: `main/reset`,
-  REDIRECT_TO_ROUTE: `main/redirectToRoute`,
-  CHANGE_SORT_TYPE: `sort/changeSortType`,
-  SORT: `sort/Sort`,
-  SET_ACTIVE_OFFER: `place-list/setActiveOffer`,
   LOAD_OFFERS: `data/loadOffers`,
   LOAD_OFFER: `data/loadOffer`,
-  LOAD_COMMENTS: `data/loadComments`,
+  SET_OFFER_LOADIGN: `data/setOfferLoading`,
   LOAD_OFFERS_NEARBY: `data/loadOffersNearby`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  LOAD_COMMENTS: `data/loadComments`,
   SEND_REVIEW: `data/sendReview`,
-  SET_ERROR_MESSAGE: `notify/setErrorMessage`,
-  UNSET_ERROR_MESSAGE: `notify/unsetErrorMessage`,
-  SET_OFFER_LOADIGN: `data/setOfferLoading`
+
+  CHANGE_LOCATION: `app/changeLocation`,
+  CHANGE_SORT_TYPE: `app/changeSortType`,
+  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_ERROR_MESSAGE: `app/setErrorMessage`,
+  UNSET_ERROR_MESSAGE: `app/unsetErrorMessage`,
+  SET_ACTIVE_OFFER: `app/setActiveOffer`,
+
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
-export const ActionCreator = {
-  changeLocation: (location) => ({
-    type: ActionType.CHANGE_LOCATION,
+export const changeLocation = createAction(ActionType.CHANGE_LOCATION, (location) => {
+  return {
     payload: location
-  }),
+  };
+});
 
-  changeOffers: (offers) => ({
-    type: ActionType.CHANGE_OFFERS,
-    payload: offers
-  }),
-
-  reset: () => ({
-    type: ActionType.RESET
-  }),
-
-  changeSortType: (sortType) => ({
-    type: ActionType.CHANGE_SORT_TYPE,
+export const changeSortType = createAction(ActionType.CHANGE_SORT_TYPE, (sortType) => {
+  return {
     payload: sortType
-  }),
+  };
+});
 
-  setActiveOffer: (id) => ({
-    type: ActionType.SET_ACTIVE_OFFER,
+export const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER, (id) => {
+  return {
     payload: id
-  }),
+  };
+});
 
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
+export const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => {
+  return {
     payload: offers.map((item) => adaptOfferToClient(item))
-  }),
+  };
+});
 
-  loadOffer: (offer) => ({
-    type: ActionType.LOAD_OFFER,
+export const loadOffer = createAction(ActionType.LOAD_OFFER, (offer) => {
+  return {
     payload: adaptOfferToClient(offer)
-  }),
+  };
+});
 
-  loadComments: (comments) => ({
-    type: ActionType.LOAD_COMMENTS,
+export const loadComments = createAction(ActionType.LOAD_COMMENTS, (comments) => {
+  return {
     payload: comments.map((item) => adaptReviewToClient(item))
-  }),
+  };
+});
 
-  loadOffersNearby: (offers) => ({
-    type: ActionType.LOAD_OFFERS_NEARBY,
+export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (offers) => {
+  return {
     payload: offers.map((item) => adaptOfferToClient(item))
-  }),
+  };
+});
 
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
+export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
+  return {
+    payload: status
+  };
+});
 
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
+export const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => {
+  return {
+    payload: url
+  };
+});
 
-  setErrorMessage: (message) => ({
-    type: ActionType.SET_ERROR_MESSAGE,
-    payload: message,
-  }),
+export const setErrorMessage = createAction(ActionType.SET_ERROR_MESSAGE, (message) => {
+  return {
+    payload: message
+  };
+});
 
-  unsetErrorMessage: () => ({
-    type: ActionType.UNSET_ERROR_MESSAGE,
+export const unsetErrorMessage = createAction(ActionType.UNSET_ERROR_MESSAGE, () => {
+  return {
     payload: null
-  }),
+  };
+});
 
-  setOfferLoading: (isOfferLoading) => ({
-    type: ActionType.SET_OFFER_LOADIGN,
+export const setOfferLoading = createAction(ActionType.SET_OFFER_LOADIGN, (isOfferLoading) => {
+  return {
     payload: isOfferLoading
-  })
-};
+  };
+});

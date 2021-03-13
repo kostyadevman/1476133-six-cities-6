@@ -1,14 +1,18 @@
 import React, {useState, useEffect} from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Rating from "../rating/rating";
 import ReviewContent from "../review-content/review-content";
 import {sendReview} from "../../store/api-actions";
-import {ActionCreator} from "../../store/action";
+import {setErrorMessage} from "../../store/action";
 import {AuthorizationStatus, RATINIG_INIT, REVIEW_LENGTH_MIN, REVIEW_LENGTH_MAX} from "../../const";
+import {getOfferID} from "../../store/data/selectors";
 
 
-const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
+const CommentForm = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const id = useSelector(getOfferID);
+
+  const dispatch = useDispatch();
 
   const [block, setBlock] = useState(true);
   const [readonly, setReadonly] = useState(false);
@@ -37,11 +41,11 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setReadonly(true);
-    onSubmit(id, {rating, comment})
+    dispatch(sendReview(id, {rating, comment}))
       .then(() => onSuccess())
       .catch(() => {
         onFail();
-        showErrorMessage(`Failed to post data`);
+        dispatch(setErrorMessage(`Failed to post data`));
       });
   };
 
@@ -50,7 +54,7 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
       comment.length >= REVIEW_LENGTH_MIN &&
       comment.length < REVIEW_LENGTH_MAX;
     // eslint-disable-next-line no-unused-expressions
-    (isValid) ? setBlock(false) : setBlock(true);
+    isValid ? setBlock(false) : setBlock(true);
   };
 
   const handleRatingChange = (value) => {
@@ -66,7 +70,7 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
     authorizationStatus === AuthorizationStatus.AUTH &&
     <form className="reviews__form form" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <Rating rating={rating} onRatinChange={handleRatingChange} readonly={readonly}/>
+      <Rating rating={rating} onRatingChange={handleRatingChange} readonly={readonly}/>
       <ReviewContent comment={comment} onContentChange={handleContentChange} readonly={readonly}/>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -83,26 +87,4 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
   );
 };
 
-CommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  showErrorMessage: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  id: state.offer.id,
-  authorizationStatus: state.authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data) {
-    return dispatch(sendReview(id, data));
-  },
-  showErrorMessage(message) {
-    dispatch(ActionCreator.setErrorMessage(message));
-  }
-});
-
-export {CommentForm};
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
+export default CommentForm;

@@ -1,17 +1,20 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
 import PlaceList from "../../place-list/place-list";
-import {getOffersByLocation, propTypesPlace} from "../../../utils/place";
 import Map from "../../map/map";
 import {MapType, PlaceListType} from "../../../const";
 import LocationList from "../../location-list/location-list";
 import Sort from "../../sort/sort";
+import {getFilteredSortedOffers} from "../../../store/data/selectors";
 
 
-const MainPage = ({offers, locations, sortTypes, locationCity}) => {
+const MainPage = ({locations, sortTypes}) => {
+  const {locationCity} = useSelector((state) => state.APP);
+  const offers = useSelector(getFilteredSortedOffers);
+
   return (
     <div className="page page--gray page--main">
 
@@ -30,7 +33,7 @@ const MainPage = ({offers, locations, sortTypes, locationCity}) => {
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {locationCity}</b>
               <Sort sortTypes={sortTypes} />
-              <PlaceList placeListType={PlaceListType.CITIES} />
+              <PlaceList offers={offers} placeListType={PlaceListType.CITIES} />
             </section>
             <div className="cities__right-section">
               <Map mapType={MapType.CITIES}/>
@@ -43,16 +46,8 @@ const MainPage = ({offers, locations, sortTypes, locationCity}) => {
 };
 
 MainPage.propTypes = {
-  locationCity: PropTypes.string.isRequired,
-  offers: PropTypes.arrayOf(propTypesPlace).isRequired,
   locations: PropTypes.array.isRequired,
-  sortTypes: PropTypes.array.isRequired,
+  sortTypes: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  offers: getOffersByLocation(state.offers, state.locationCity),
-  locationCity: state.locationCity
-});
-
-export {MainPage};
-export default connect(mapStateToProps, null)(MainPage);
+export default MainPage;
