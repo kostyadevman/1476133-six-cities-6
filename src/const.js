@@ -5,6 +5,7 @@ export const MAX_RATING = 5;
 export const RATINIG_INIT = 0;
 export const REVIEW_LENGTH_MIN = 50;
 export const REVIEW_LENGTH_MAX = 300;
+export const VISIBLE_OFFERS_NEARBY_COUNT = 3;
 
 
 export const SortTypes = {

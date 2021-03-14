@@ -1,7 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {useDispatch, useSelector} from "react-redux";
+import {unsetErrorMessage} from "../../store/action";
 
 const alertStyle = {
   position: `fixed`,
@@ -22,20 +21,23 @@ const closeBtnStyle = {
   cursor: `pointer`,
   transition: `0.3s`,
 };
-const Error = ({errorMessage, removeMessage}) => {
 
+const Error = () => {
+  const {errorMessage} = useSelector((state) => state.APP);
+
+  const dispatch = useDispatch();
 
   if (!errorMessage) {
     return null;
   }
 
   setTimeout(() => {
-    removeMessage();
+    dispatch(unsetErrorMessage());
   }, 5000);
 
   const handleCloseClick = (evt) => {
     evt.preventDefault();
-    removeMessage();
+    dispatch(unsetErrorMessage());
   };
 
   return (
@@ -46,20 +48,5 @@ const Error = ({errorMessage, removeMessage}) => {
   );
 };
 
-Error.propTypes = {
-  errorMessage: PropTypes.string,
-  removeMessage: PropTypes.func.isRequired
-};
 
-const mapStateToProps = (state) => ({
-  errorMessage: state.errorMessage
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  removeMessage() {
-    dispatch(ActionCreator.unsetErrorMessage());
-  }
-});
-
-export {Error};
-export default connect(mapStateToProps, mapDispatchToProps)(Error);
+export default Error;

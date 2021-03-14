@@ -1,22 +1,32 @@
-import React, {useState, useRef} from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import Rating from "../rating/rating";
 import ReviewContent from "../review-content/review-content";
 import {sendReview} from "../../store/api-actions";
-import {ActionCreator} from "../../store/action";
-import {AuthorizationStatus, RATINIG_INIT} from "../../const";
+import {setErrorMessage} from "../../store/action";
+import {AuthorizationStatus, RATINIG_INIT, REVIEW_LENGTH_MIN, REVIEW_LENGTH_MAX} from "../../const";
+import {getOfferID} from "../../store/data/selectors";
 
 
-const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
-  const commentRef = useRef();
+const CommentForm = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const id = useSelector(getOfferID);
 
+  const dispatch = useDispatch();
+
+  const [block, setBlock] = useState(true);
   const [readonly, setReadonly] = useState(false);
   const [rating, setRating] = useState(RATINIG_INIT);
   const [comment, setComment] = useState(``);
 
+  useEffect(() => {
+    changeBlock();
+  }, [comment, rating]);
+
   const reset = () => {
-    commentRef.current.reset();
+    setReadonly(false);
+    setRating(RATINIG_INIT);
+    setComment(``);
   };
 
   const onSuccess = () => {
@@ -31,12 +41,20 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     setReadonly(true);
-    onSubmit(id, {rating, comment})
+    dispatch(sendReview(id, {rating, comment}))
       .then(() => onSuccess())
       .catch(() => {
         onFail();
-        showErrorMessage(`Failed to post data`);
+        dispatch(setErrorMessage(`Failed to post data`));
       });
+  };
+
+  const changeBlock = () => {
+    const isValid = rating > 0 &&
+      comment.length >= REVIEW_LENGTH_MIN &&
+      comment.length < REVIEW_LENGTH_MAX;
+    // eslint-disable-next-line no-unused-expressions
+    isValid ? setBlock(false) : setBlock(true);
   };
 
   const handleRatingChange = (value) => {
@@ -50,14 +68,10 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
 
   return (
     authorizationStatus === AuthorizationStatus.AUTH &&
-    <form
-      ref={commentRef}
-      className="reviews__form form" onSubmit={handleSubmit}
-
-    >
+    <form className="reviews__form form" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <Rating onRatinChange={handleRatingChange} readonly={readonly}/>
-      <ReviewContent onContentChange={handleContentChange} readonly={readonly}/>
+      <Rating rating={rating} onRatingChange={handleRatingChange} readonly={readonly}/>
+      <ReviewContent comment={comment} onContentChange={handleContentChange} readonly={readonly}/>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
                     To submit review please make sure to set <span className="reviews__star">rating</span> and
@@ -66,33 +80,11 @@ const CommentForm = ({authorizationStatus, id, onSubmit, showErrorMessage}) => {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={readonly}
+          disabled={block}
         >Submit</button>
       </div>
     </form>
   );
 };
 
-CommentForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  showErrorMessage: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  id: state.offer.id,
-  authorizationStatus: state.authorizationStatus
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data) {
-    return dispatch(sendReview(id, data));
-  },
-  showErrorMessage(message) {
-    dispatch(ActionCreator.setErrorMessage(message));
-  }
-});
-
-export {CommentForm};
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm);
+export default CommentForm;

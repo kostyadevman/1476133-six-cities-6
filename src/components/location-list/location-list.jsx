@@ -1,12 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {ActionCreator} from '../../store/action';
+import {useDispatch, useSelector} from "react-redux";
+import {changeLocation, changeSortType} from '../../store/action';
 import LocationItem from "../location-item/location-item";
 import {SortTypes} from "../../const";
 
 
-const LocationList = ({locations, locationCity, onChangeLocation}) => {
+const LocationList = ({locations}) => {
+  const {locationCity} = useSelector((state) => state.APP);
+
+  const dispatch = useDispatch();
+
+  const handleChangeLocation = (location) => {
+    dispatch(changeLocation(location));
+    dispatch(changeSortType(SortTypes.POPULAR));
+  };
+
   return (
     <ul className="locations__list tabs__list">
       {locations.map((location, locationId) => (
@@ -14,7 +23,7 @@ const LocationList = ({locations, locationCity, onChangeLocation}) => {
           key={locationId}
           location={location}
           isActive={locationCity === location}
-          onChangeLocation={onChangeLocation}
+          onChangeLocation={handleChangeLocation}
         />
       ))}
     </ul>
@@ -23,22 +32,8 @@ const LocationList = ({locations, locationCity, onChangeLocation}) => {
 
 LocationList.propTypes = {
   locations: PropTypes.array.isRequired,
-  locationCity: PropTypes.string.isRequired,
-  onChangeLocation: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  locationCity: state.locationCity
-});
 
-
-const mapDispatchToProps = (dispatch) => ({
-  onChangeLocation(location) {
-    dispatch(ActionCreator.changeLocation(location));
-    dispatch(ActionCreator.changeSortType(SortTypes.POPULAR));
-  }
-});
-
-export {LocationList};
-export default connect(mapStateToProps, mapDispatchToProps)(LocationList);
+export default LocationList;
 

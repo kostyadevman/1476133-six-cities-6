@@ -1,15 +1,21 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from "prop-types";
-import {SORT_TYPES} from "../../const";
 import SortItem from "../sort-item/sort-item";
-import {ActionCreator} from "../../store/action";
+import {changeSortType} from "../../store/action";
 
 
-const SortList = ({isOpen, sortType, sortTypes, onChangeSortType}) => {
+const SortList = ({isOpen, sortTypes}) => {
+  const {sortType} = useSelector((state) => state.APP);
+
+  const dispatch = useDispatch();
   const className = isOpen ?
     `places__options places__options--custom places__options--opened` :
     `places__options places__options--custom`;
+
+  const handleChangeSortType = (type) => {
+    dispatch(changeSortType(type));
+  };
 
   return (
     <ul className={className}>
@@ -18,7 +24,7 @@ const SortList = ({isOpen, sortType, sortTypes, onChangeSortType}) => {
           key={`sort-item-${id}`}
           isActive={sortType === type}
           type={type}
-          onChangeSortType={onChangeSortType}
+          onChangeSortType={handleChangeSortType}
         />
       ))}
     </ul>
@@ -28,21 +34,7 @@ const SortList = ({isOpen, sortType, sortTypes, onChangeSortType}) => {
 SortList.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   sortTypes: PropTypes.array.isRequired,
-  sortType: PropTypes.oneOf(SORT_TYPES),
-  onChangeSortType: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onChangeSortType(type) {
-    dispatch(ActionCreator.changeSortType(type));
-    // dispatch(ActionCreator.sort());
-  }
-});
-
-export {SortList};
-export default connect(mapStateToProps, mapDispatchToProps)(SortList);
+export default SortList;
 

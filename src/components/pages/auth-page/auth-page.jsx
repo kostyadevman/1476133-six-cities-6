@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import Header from "../../layout/header/header";
 import {login} from "../../../store/api-actions";
 import {CITIES, AppRoute} from "../../../const";
+import {getLocationCity} from "../../../store/app/selectors";
 
 const AuthPage = ({locationCity, onSubmit}) => {
   const loginRef = useRef();
@@ -78,7 +79,7 @@ AuthPage.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  locationCity: state.locationCity,
+  locationCity: getLocationCity(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

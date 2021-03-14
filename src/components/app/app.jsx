@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
+import {useSelector, useDispatch} from 'react-redux';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import MainPage from "../pages/main-page/main-page";
 import AuthPage from "../pages/auth-page/auth-page";
 import FavoritePlacesPage from "../pages/favorite-places-page/fevorite-places-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
-import {propTypesPlace} from "../../utils/place";
 import browserHistory from "../../browser-history";
-import {connect} from "react-redux";
 import {fetchOfferList} from "../../store/api-actions";
 import Spinner from "../spinner/spinner";
 import {CITIES, SORT_TYPES, AppRoute, AuthorizationStatus} from "../../const";
@@ -15,17 +13,15 @@ import withPrivateRoute from "../with-private-route/with-private-route";
 import PlaceDetailPageWrapper from "../pages/place-detail-page-wrapper/place-detail-page-wrapper";
 
 
-const App = (props) => {
-  const {
-    offers,
-    onLoadData,
-    isOfferListLoaded,
-    authorizationStatus,
-  } = props;
+const App = () => {
+  const {authorizationStatus} = useSelector((state) => state.USER);
+  const {offers, isOfferListLoaded} = useSelector((state) => state.DATA);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isOfferListLoaded) {
-      onLoadData();
+      dispatch(fetchOfferList());
     }
   }, [isOfferListLoaded]);
 
@@ -63,26 +59,4 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  offers: PropTypes.arrayOf(propTypesPlace).isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  isOfferListLoaded: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  isOfferListLoaded: state.isOfferListLoaded,
-  authorizationStatus: state.authorizationStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchOfferList());
-  }
-});
-
-export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
+export default App;

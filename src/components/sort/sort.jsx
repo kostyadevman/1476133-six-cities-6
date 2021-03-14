@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
-import {CITIES, SORT_TYPES} from "../../const";
 import SortList from "../sort-list/sort-list";
 
 
-const Sort = ({sortType, sortTypes, locationCity}) => {
+const Sort = ({sortTypes}) => {
+  const {sortType, locationCity} = useSelector((state) => state.APP);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const sortMenuClickHandler = () => setIsMenuOpen(!isMenuOpen);
@@ -29,15 +29,8 @@ const Sort = ({sortType, sortTypes, locationCity}) => {
 };
 
 Sort.propTypes = {
-  sortType: PropTypes.oneOf(SORT_TYPES).isRequired,
   sortTypes: PropTypes.array.isRequired,
-  locationCity: PropTypes.oneOf(CITIES).isRequired
 };
 
-const mapStateToProps = (state) => ({
-  sortType: state.sortType,
-  locationCity: state.locationCity
-});
 
-export {Sort};
-export default connect(mapStateToProps, null)(Sort);
+export default Sort;

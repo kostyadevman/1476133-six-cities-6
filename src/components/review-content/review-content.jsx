@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {REVIEW_LENGTH_MAX, REVIEW_LENGTH_MIN} from "../../const";
 
-const ReviewContent = ({onContentChange, readonly}) => {
+const ReviewContent = ({comment, onContentChange, readonly}) => {
 
   const handleChange = (evt) => {
     onContentChange(evt.target.value);
@@ -10,6 +10,7 @@ const ReviewContent = ({onContentChange, readonly}) => {
 
   return (
     <textarea
+      value={comment}
       disabled={readonly}
       maxLength={REVIEW_LENGTH_MAX}
       minLength={REVIEW_LENGTH_MIN}
@@ -24,6 +25,7 @@ const ReviewContent = ({onContentChange, readonly}) => {
 };
 
 ReviewContent.propTypes = {
+  comment: PropTypes.string,
   onContentChange: PropTypes.func.isRequired,
   readonly: PropTypes.bool.isRequired
 };
