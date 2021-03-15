@@ -1,5 +1,13 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {loadComments, loadOffer, loadOffers, loadOffersNearby, setOfferLoading} from "../action";
+import {
+  loadComments,
+  loadFavorite,
+  loadOffer,
+  loadOffers,
+  loadOffersNearby,
+  setFavoriteLoading,
+  setOfferLoading
+} from "../action";
 import {EMPTY_OFFER} from "../../const";
 
 const initialState = {
@@ -8,7 +16,9 @@ const initialState = {
   offer: EMPTY_OFFER,
   isOfferLoading: true,
   comments: [],
-  offersNearby: []
+  offersNearby: [],
+  favorite: [],
+  isFavoriteLoading: true
 };
 
 const data = createReducer(initialState, (builder) => {
@@ -27,6 +37,13 @@ const data = createReducer(initialState, (builder) => {
   });
   builder.addCase(setOfferLoading, (state, action) => {
     state.isOfferLoading = action.payload;
+  });
+  builder.addCase(loadFavorite, (state, action) => {
+    state.favorite = action.payload;
+    state.isFavoriteLoading = false;
+  });
+  builder.addCase(setFavoriteLoading, (state, action) => {
+    state.isFavoriteLoading = action.payload;
   });
 });
 

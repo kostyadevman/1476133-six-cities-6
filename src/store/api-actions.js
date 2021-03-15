@@ -5,7 +5,9 @@ import {
   redirectToRoute,
   loadComments,
   loadOffersNearby,
-  requireAuthorization
+  requireAuthorization,
+  loadFavorite,
+  setFavoriteLoading
 } from "./action";
 import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 
@@ -49,3 +51,15 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
 export const sendReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(APIRoute.COMMENTS.replace(`:id`, id), {comment, rating})
 );
+
+export const fetchFavorite = () => (dispatch, _getState, api) => ([
+  dispatch(setFavoriteLoading(true)),
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavorite(data)))
+]);
+
+// export const fetchFavorite = () => (dispatch, _getState, api) => (
+//   api.get(APIRoute.FAVORITE)
+//     .then(({data}) => dispatch(loadFavorite(data)))
+//     .then(() => dispatch(setFavoriteLoading(false)))
+// );

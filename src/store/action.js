@@ -9,6 +9,8 @@ export const ActionType = {
   LOAD_OFFERS_NEARBY: `data/loadOffersNearby`,
   LOAD_COMMENTS: `data/loadComments`,
   SEND_REVIEW: `data/sendReview`,
+  LOAD_FAVORITE: `data/loadFavorite`,
+  SET_FAVORITE_LOADIGN: `data/setFavoriteLoading`,
 
   CHANGE_LOCATION: `app/changeLocation`,
   CHANGE_SORT_TYPE: `app/changeSortType`,
@@ -89,5 +91,17 @@ export const unsetErrorMessage = createAction(ActionType.UNSET_ERROR_MESSAGE, ()
 export const setOfferLoading = createAction(ActionType.SET_OFFER_LOADIGN, (isOfferLoading) => {
   return {
     payload: isOfferLoading
+  };
+});
+
+export const loadFavorite = createAction(ActionType.LOAD_FAVORITE, (favorite) => {
+  return {
+    payload: favorite.map((item) => adaptOfferToClient(item))
+  };
+});
+
+export const setFavoriteLoading = createAction(ActionType.SET_FAVORITE_LOADIGN, (status) => {
+  return {
+    payload: status
   };
 });

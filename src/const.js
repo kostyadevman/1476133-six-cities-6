@@ -67,7 +67,8 @@ export const APIRoute = {
   LOGIN: `/login`,
   OFFER: `/hotels/:id`,
   COMMENTS: `/comments/:id`,
-  NEARBY: `/hotels/:id/nearby`
+  NEARBY: `/hotels/:id/nearby`,
+  FAVORITE: `/favorite`
 };
 
 export const EMPTY_OFFER = {

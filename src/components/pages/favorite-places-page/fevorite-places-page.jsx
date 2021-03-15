@@ -4,7 +4,7 @@ import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
 import {propTypesPlace} from "../../../utils/place";
 import FavoritePlaceList from "../../favorite-place-list/favorite-place-list";
-
+import withSpinner from "../../with-spinner/with-spinner";
 
 const FavoritePlacesPage = ({offers}) => {
 
@@ -34,4 +34,4 @@ FavoritePlacesPage.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
-export default FavoritePlacesPage;
+export default withSpinner(FavoritePlacesPage);
