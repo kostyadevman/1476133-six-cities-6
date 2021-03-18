@@ -12,19 +12,19 @@ import {EMPTY_OFFER} from "../../const";
 
 const initialState = {
   offers: [],
-  isOfferListLoaded: false,
+  isOfferListLoading: true,
   offer: EMPTY_OFFER,
   isOfferLoading: true,
   comments: [],
   offersNearby: [],
-  favorite: [],
-  isFavoriteLoading: true
+  favorites: [],
+  isFavoriteLoading: true,
 };
 
 const data = createReducer(initialState, (builder) => {
   builder.addCase(loadOffers, (state, action) => {
     state.offers = action.payload;
-    state.isOfferListLoaded = true;
+    state.isOfferListLoading = false;
   });
   builder.addCase(loadOffer, (state, action) => {
     state.offer = action.payload;
@@ -39,7 +39,7 @@ const data = createReducer(initialState, (builder) => {
     state.isOfferLoading = action.payload;
   });
   builder.addCase(loadFavorite, (state, action) => {
-    state.favorite = action.payload;
+    state.favorites = action.payload;
     state.isFavoriteLoading = false;
   });
   builder.addCase(setFavoriteLoading, (state, action) => {

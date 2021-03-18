@@ -7,9 +7,9 @@ import {fetchFavorite} from "../../../store/api-actions";
 
 
 const FavoritePlacesPageWrapper = () => {
-  const {favorite, isFavoriteLoading} = useSelector((state) => state.DATA);
+  const favorites = useSelector((state) => state.DATA.favorites);
+  const isFavoriteLoading = useSelector((state) => state.DATA.isFavoriteLoading);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(fetchFavorite());
@@ -17,7 +17,7 @@ const FavoritePlacesPageWrapper = () => {
 
   return (
     <FavoritePlacesPage
-      offers={favorite}
+      offers={favorites}
       isLoading={isFavoriteLoading}
     />
   );

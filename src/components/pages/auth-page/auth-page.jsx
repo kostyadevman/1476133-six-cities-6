@@ -1,23 +1,25 @@
 import React, {useRef} from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import Header from "../../layout/header/header";
 import {login} from "../../../store/api-actions";
-import {CITIES, AppRoute} from "../../../const";
-import {getLocationCity} from "../../../store/app/selectors";
+import {AppRoute} from "../../../const";
 
-const AuthPage = ({locationCity, onSubmit}) => {
+const AuthPage = () => {
+  const locationCity = useSelector((state) => state.DATA.locationCity);
+  const dispatch = useDispatch();
+
   const loginRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    })
+    );
   };
 
   return (
@@ -73,21 +75,5 @@ const AuthPage = ({locationCity, onSubmit}) => {
   );
 };
 
-AuthPage.propTypes = {
-  locationCity: PropTypes.oneOf(CITIES).isRequired,
-  onSubmit: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  locationCity: getLocationCity(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  }
-});
-
-export {AuthPage};
-export default connect(mapStateToProps, mapDispatchToProps)(AuthPage);
+export default AuthPage;
 

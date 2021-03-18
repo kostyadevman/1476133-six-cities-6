@@ -65,10 +65,12 @@ export const AppRoute = {
 export const APIRoute = {
   OFFERS: `/hotels`,
   LOGIN: `/login`,
+  LOGOUT: `/logout`,
   OFFER: `/hotels/:id`,
   COMMENTS: `/comments/:id`,
   NEARBY: `/hotels/:id/nearby`,
-  FAVORITE: `/favorite`
+  FAVORITE: `/favorite`,
+  FAVORITE_ITEM: `/favorite/:hotel_id/:status`
 };
 
 export const EMPTY_OFFER = {
@@ -104,4 +106,12 @@ export const EMPTY_OFFER = {
     "zoom": 0
   },
   "id": 0
+};
+
+export const EMPTY_USER = {
+  "avatar_url": ``,
+  "email": ``,
+  "id": 1,
+  "is_pro": false,
+  "name": ``
 };

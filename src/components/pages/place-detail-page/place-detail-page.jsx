@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
 import {MY_ONLY_USER} from "../../../mocks/users";
@@ -6,11 +6,31 @@ import {makeRatingScore, propTypesPlace} from "../../../utils/place";
 import {propTypesReview} from '../../../utils/review';
 import Reviews from "../../reviews/reviews";
 import PlaceList from "../../place-list/place-list";
-import withSpinner from "../../with-spinner/with-spinner";
-import {MapType, PlaceListType} from "../../../const";
+import withSpinner from "../../../hocs/with-spinner/with-spinner";
+import {AppRoute, AuthorizationStatus, MapType, PlaceListType} from "../../../const";
 import Map from "../../map/map";
+import {setFavoriteStatus} from "../../../store/api-actions";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory, useParams} from "react-router-dom";
 
 const PlaceDetailPage = ({offer, comments, offersNearby}) => {
+  const {id} = useParams();
+  const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+
+  const handleBookmarkClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      history.push(AppRoute.LOGIN);
+      return;
+    }
+    setIsFavorite(!isFavorite);
+
+    dispatch(setFavoriteStatus(id, !isFavorite ? 1 : 0));
+
+  };
 
   const {
     isPremium,
@@ -26,6 +46,9 @@ const PlaceDetailPage = ({offer, comments, offersNearby}) => {
     host
   } = offer;
 
+  const classFavorite = isFavorite ?
+    `property__bookmark-button property__bookmark-button--active button` :
+    `property__bookmark-button button`;
 
   const hostClassName = `property__avatar-wrapper ${host.isPro && `property__avatar-wrapper--pro`} user__avatar-wrapper`;
   return (
@@ -46,14 +69,20 @@ const PlaceDetailPage = ({offer, comments, offersNearby}) => {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {isPremium && <div className="property__mark">
-                <span>Premium</span>
-              </div> }
+              {isPremium && (
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>)
+              }
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button
+                  className={classFavorite}
+                  type="button"
+                  onClick={handleBookmarkClick}
+                >
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"/>
                   </svg>

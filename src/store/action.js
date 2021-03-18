@@ -20,6 +20,7 @@ export const ActionType = {
   SET_ACTIVE_OFFER: `app/setActiveOffer`,
 
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  SET_USER: `user/setUser`
 };
 
 export const changeLocation = createAction(ActionType.CHANGE_LOCATION, (location) => {
@@ -67,6 +68,12 @@ export const loadOffersNearby = createAction(ActionType.LOAD_OFFERS_NEARBY, (off
 export const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => {
   return {
     payload: status
+  };
+});
+
+export const setUser = createAction(ActionType.SET_USER, (user) => {
+  return {
+    payload: user
   };
 });
 

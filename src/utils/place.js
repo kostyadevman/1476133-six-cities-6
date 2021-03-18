@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import {CardType, CITIES, MAX_RATING, PLACE_TYPE} from "../const";
-// import offers from "../mocks/offers";
 
 export const PLACE_SETTINGS = {
   cities: {
@@ -8,21 +7,27 @@ export const PLACE_SETTINGS = {
     imgWidth: 260,
     articleClassName: `cities__place-card place-card`,
     imgWrapperClassName: `cities__image-wrapper place-card__image-wrapper`,
-    premiumMark: false
+    infoClass: `place-card__info`,
+    premiumMark: true,
+    setActiveHandlers: true
   },
   favorites: {
     imgHeight: 110,
     imgWidth: 150,
     articleClassName: `favorites__card place-card`,
     imgWrapperClassName: `favorites__image-wrapper place-card__image-wrapper`,
-    premiumMark: true
+    infoClass: `favorites__card-info place-card__info`,
+    premiumMark: true,
+    setActiveHandlers: false
   },
   near: {
     imgHeight: 200,
     imgWidth: 260,
     articleClassName: `near-places__card place-card`,
     imgWrapperClassName: `near-places__image-wrapper place-card__image-wrapper`,
-    premiumMark: false
+    infoClass: `place-card__info`,
+    premiumMark: true,
+    setActiveHandlers: true
   }
 };
 

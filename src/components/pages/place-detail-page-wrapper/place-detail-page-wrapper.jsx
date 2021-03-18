@@ -8,7 +8,9 @@ import {getOffersNearbyVisible} from "../../../store/data/selectors";
 const PlaceDetailPageWrapper = () => {
   const {id} = useParams();
 
-  const {offer, isOfferLoading, comments} = useSelector((state) => state.DATA);
+  const offer = useSelector((state) => state.DATA.offer);
+  const isOfferLoading = useSelector((state) => state.DATA.isOfferLoading);
+  const comments = useSelector((state) => state.DATA.comments);
   const offersNearby = useSelector(getOffersNearbyVisible);
   const dispatch = useDispatch();
 
