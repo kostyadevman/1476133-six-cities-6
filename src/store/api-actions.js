@@ -5,7 +5,9 @@ import {
   redirectToRoute,
   loadComments,
   loadOffersNearby,
-  requireAuthorization
+  requireAuthorization,
+  loadFavorite,
+  setFavoriteLoading, setUser
 } from "./action";
 import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 
@@ -36,16 +38,38 @@ export const fetchOffersNearby = (id) => (dispatch, _getState, api) => (
 
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(APIRoute.LOGIN)
+    .then(({data}) => dispatch(setUser(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, {email, password})
+    .then(({data}) => dispatch(setUser(data)))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.FAVORITES)))
+);
+
+export const logout = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.LOGOUT)
+    .then(() => dispatch(requireAuthorization(AuthorizationStatus.NO_AUTH)))
+    .then(() => dispatch(redirectToRoute(AppRoute.ROOT)))
 );
 
 export const sendReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(APIRoute.COMMENTS.replace(`:id`, id), {comment, rating})
 );
+
+export const fetchFavorite = () => (dispatch, _getState, api) => ([
+  dispatch(setFavoriteLoading(true)),
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => dispatch(loadFavorite(data)))
+]);
+
+export const setFavoriteStatus = (hotelID, status) => (dispatch, _getState, api) => (
+  api.post(APIRoute.FAVORITE_ITEM
+    .replace(`:hotel_id`, hotelID)
+    .replace(`:status`, status)
+  )
+);
+

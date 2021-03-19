@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Link, useHistory} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {makeRatingScore, propTypesPlace} from "../../utils/place";
 import {capitalize} from "../../utils/common";
-import {Link} from "react-router-dom";
 import {PLACE_SETTINGS} from "../../utils/place";
+import {useDispatch, useSelector} from "react-redux";
+import {setFavoriteStatus} from "../../store/api-actions";
+import {AppRoute, AuthorizationStatus} from "../../const";
+
 
 const Place = ({offer, cardType, setActive, unsetActive}) => {
+  const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+
   const {
     id,
     isPremium,
@@ -13,11 +23,26 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
     price,
     type,
     rating,
-    title
+    title,
   } = offer;
+
+  const classFavorite = isFavorite ?
+    `place-card__bookmark-button place-card__bookmark-button--active button` :
+    `place-card__bookmark-button button`;
 
   const handleMouseEnter = () => setActive(offer.id);
   const handleMouseLeave = () => unsetActive();
+
+  const handleBookmarkClick = () => {
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      history.push(AppRoute.LOGIN);
+      return;
+    }
+    setIsFavorite(!isFavorite);
+
+    dispatch(setFavoriteStatus(id, !isFavorite ? 1 : 0));
+
+  };
 
   return (
     <article
@@ -41,13 +66,17 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={PLACE_SETTINGS[cardType].infoClass}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button
+            className={classFavorite}
+            type="button"
+            onClick={handleBookmarkClick}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"/>
             </svg>
@@ -64,7 +93,7 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
           <Link to={`/offer/${id}`} href="#">{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
-      </div>
+      </div>`
     </article>
   );
 };
