@@ -6,7 +6,7 @@ import {login} from "../../../store/api-actions";
 import {AppRoute} from "../../../const";
 
 const AuthPage = () => {
-  const locationCity = useSelector((state) => state.DATA.locationCity);
+  const locationCity = useSelector((state) => state.APP.locationCity);
   const dispatch = useDispatch();
 
   const loginRef = useRef();

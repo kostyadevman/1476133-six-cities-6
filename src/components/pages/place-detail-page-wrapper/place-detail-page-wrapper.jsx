@@ -18,7 +18,7 @@ const PlaceDetailPageWrapper = () => {
     dispatch(fetchOffer(id));
     dispatch(fetchComments(id));
     dispatch(fetchOffersNearby(id));
-  }, []);
+  }, [id]);
 
 
   return (
