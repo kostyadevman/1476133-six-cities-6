@@ -58,6 +58,7 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const sendReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(APIRoute.COMMENTS.replace(`:id`, id), {comment, rating})
+    .then(({data}) => dispatch(loadComments(data)))
 );
 
 export const fetchFavorite = () => (dispatch, _getState, api) => ([

@@ -6,6 +6,7 @@ export const RATINIG_INIT = 0;
 export const REVIEW_LENGTH_MIN = 50;
 export const REVIEW_LENGTH_MAX = 300;
 export const VISIBLE_OFFERS_NEARBY_COUNT = 3;
+export const VISIBLE_REVIEW_COUNT = 10;
 
 
 export const SortTypes = {

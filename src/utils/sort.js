@@ -1,4 +1,5 @@
 import {SortTypes} from "../const";
+import dayjs from "dayjs";
 
 const SortFuncMap = {
   [SortTypes.PRICE_INC]: (a, b) => a.price - b.price,
@@ -13,4 +14,10 @@ export const sortOffers = (offers, sortType) => {
   }
 
   return offers.slice().sort(SortFuncMap[sortType]);
+};
+
+export const sortComments = (comments) => {
+  return comments.slice().sort(
+      (a, b) => dayjs(b.date) - dayjs(a.date)
+  );
 };
