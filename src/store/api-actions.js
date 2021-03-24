@@ -19,9 +19,7 @@ export const fetchOfferList = () => (dispatch, _getState, api) => (
 export const fetchOffer = (id) => (dispatch, _getState, api) => ([
   dispatch(setOfferLoading(true)),
   api.get(APIRoute.OFFER.replace(`:id`, id))
-    .then(({data}) => {
-      dispatch(loadOffer(data));
-    })
+    .then(({data}) => dispatch(loadOffer(data)))
     .catch(() => dispatch(redirectToRoute(AppRoute.PAGE_NOT_FOUND)))
     .then(() => dispatch(setOfferLoading(false)))
 ]);
@@ -58,6 +56,7 @@ export const logout = () => (dispatch, _getState, api) => (
 
 export const sendReview = (id, {comment, rating}) => (dispatch, _getState, api) => (
   api.post(APIRoute.COMMENTS.replace(`:id`, id), {comment, rating})
+    .then(({data}) => dispatch(loadComments(data)))
 );
 
 export const fetchFavorite = () => (dispatch, _getState, api) => ([

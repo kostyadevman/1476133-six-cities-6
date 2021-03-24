@@ -6,6 +6,7 @@ export const RATINIG_INIT = 0;
 export const REVIEW_LENGTH_MIN = 50;
 export const REVIEW_LENGTH_MAX = 300;
 export const VISIBLE_OFFERS_NEARBY_COUNT = 3;
+export const VISIBLE_REVIEW_COUNT = 10;
 
 
 export const SortTypes = {
@@ -114,4 +115,18 @@ export const EMPTY_USER = {
   "id": 1,
   "is_pro": false,
   "name": ``
+};
+
+
+export const REVIEW = {
+  "comment": `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+  "date": `2019-05-08T14:13:56.569Z`,
+  "id": 1,
+  "rating": 4,
+  "user": {
+    "avatar_url": `img/1.png`,
+    "id": 4,
+    "is_pro": false,
+    "name": `Max`
+  }
 };
