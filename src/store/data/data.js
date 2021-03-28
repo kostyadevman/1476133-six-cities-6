@@ -28,6 +28,7 @@ const data = createReducer(initialState, (builder) => {
   });
   builder.addCase(loadOffer, (state, action) => {
     state.offer = action.payload;
+    state.isOfferLoading = false;
   });
   builder.addCase(loadOffersNearby, (state, action) => {
     state.offersNearby = action.payload;

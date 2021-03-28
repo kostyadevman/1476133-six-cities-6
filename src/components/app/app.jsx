@@ -1,9 +1,8 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import AuthPage from "../pages/auth-page/auth-page";
 import NotFoundPage from "../pages/not-found-page/not-found-page";
-import browserHistory from "../../browser-history";
 import withPrivateRoute from "../../hocs/with-private-route/with-private-route";
 import PlaceDetailPageWrapper from "../pages/place-detail-page-wrapper/place-detail-page-wrapper";
 import FavoritePlacesPageWrapper from "../pages/favorite-places-page-wrapper/favorite-places-page-wrapper";
@@ -24,25 +23,23 @@ const App = () => {
   );
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route exact path={AppRoute.ROOT}>
-          <MainPageWrapper />
-        </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritePrivate />
-        </Route>
-        <Route exact path={AppRoute.LOGIN}>
-          <SignInPagePrivate />
-        </Route>
-        <Route exact path={AppRoute.OFFER}>
-          <PlaceDetailPageWrapper />;
-        </Route>
-        <Route>
-          <NotFoundPage/>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path={AppRoute.ROOT}>
+        <MainPageWrapper />
+      </Route>
+      <Route exact path={AppRoute.FAVORITES}>
+        <FavoritePrivate />
+      </Route>
+      <Route exact path={AppRoute.LOGIN}>
+        <SignInPagePrivate />
+      </Route>
+      <Route exact path={AppRoute.OFFER}>
+        <PlaceDetailPageWrapper />;
+      </Route>
+      <Route>
+        <NotFoundPage/>
+      </Route>
+    </Switch>
   );
 };
 

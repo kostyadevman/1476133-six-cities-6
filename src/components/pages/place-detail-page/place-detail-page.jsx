@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import Header from "../../layout/header/header";
-import {MY_ONLY_USER} from "../../../mocks/users";
 import {makeRatingScore, propTypesPlace} from "../../../utils/place";
 import {propTypesReview} from '../../../utils/review';
 import Reviews from "../../reviews/reviews";
@@ -54,7 +53,7 @@ const PlaceDetailPage = ({offer, comments, offersNearby}) => {
   return (
     <div className="page">
 
-      <Header userName={MY_ONLY_USER}/>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
