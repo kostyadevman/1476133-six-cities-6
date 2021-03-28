@@ -30,7 +30,7 @@ describe(`Test routing`, () => {
       },
       APP: {locationCity: INITIAL_LOCATION},
     });
-    window.mockStore = store;
+
     const history = createMemoryHistory();
     render(
         <redux.Provider store={store}>
