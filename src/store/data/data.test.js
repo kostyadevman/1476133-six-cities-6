@@ -113,7 +113,7 @@ describe(`Async operations work correctly`, () => {
 
     return offerLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(2);
 
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_OFFER_LOADIGN,
@@ -125,10 +125,6 @@ describe(`Async operations work correctly`, () => {
           payload: adaptOfferToClient(EMPTY_OFFER)
         });
 
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: ActionType.SET_OFFER_LOADIGN,
-          payload: false
-        });
       });
   });
 
