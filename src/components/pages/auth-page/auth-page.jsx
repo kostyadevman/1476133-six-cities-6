@@ -46,6 +46,7 @@ const AuthPage = () => {
                   placeholder="Email"
                   required
                   id="email"
+                  data-testid="email"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -57,6 +58,8 @@ const AuthPage = () => {
                   name="password"
                   placeholder="Password"
                   required
+                  id="password"
+                  data-testid="password"
                 />
               </div>
               <button className="login__submit form__submit button" type="submit">Sign in</button>
