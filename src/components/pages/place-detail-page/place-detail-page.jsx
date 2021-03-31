@@ -10,10 +10,10 @@ import {AppRoute, AuthorizationStatus, MapType, PlaceListType} from "../../../co
 import Map from "../../map/map";
 import {setFavoriteStatus} from "../../../store/api-actions";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory, useParams} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const PlaceDetailPage = ({offer, comments, offersNearby}) => {
-  const {id} = useParams();
+
   const authorizationStatus = useSelector((state) => state.USER.authorizationStatus);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,7 +27,7 @@ const PlaceDetailPage = ({offer, comments, offersNearby}) => {
     }
     setIsFavorite(!isFavorite);
 
-    dispatch(setFavoriteStatus(id, !isFavorite ? 1 : 0));
+    dispatch(setFavoriteStatus(offer.id, !isFavorite ? 1 : 0));
 
   };
 
@@ -138,7 +138,7 @@ const PlaceDetailPage = ({offer, comments, offersNearby}) => {
               <Reviews reviews={comments} />
             </div>
           </div>
-          <Map offers={offersNearby} mapType={MapType.NEAR}/>
+          <Map currentOffer={offer} offers={offersNearby} mapType={MapType.NEAR}/>
         </section>
         <div className="container">
           <section className="near-places places">

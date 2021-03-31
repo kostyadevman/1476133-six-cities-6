@@ -10,6 +10,7 @@ import withSpinner from "../../../hocs/with-spinner/with-spinner";
 
 const MainPage = ({locations, sortTypes}) => {
   const locationCity = useSelector((state) => state.APP.locationCity);
+  const activeOffer = useSelector((state) => state.APP.activeOffer);
   const offers = useSelector(getFilteredSortedOffers);
 
   return (
@@ -17,7 +18,13 @@ const MainPage = ({locations, sortTypes}) => {
 
       <Header />
       {(offers.length > 0) ?
-        <Main offers={offers} locationCity={locationCity} sortTypes={sortTypes} locations={locations} /> :
+        <Main
+          activeOffer={activeOffer}
+          offers={offers}
+          locationCity={locationCity}
+          sortTypes={sortTypes}
+          locations={locations}
+        /> :
         <MainEmpty locations={locations} locationCity={locationCity} />
       }
     </div>
