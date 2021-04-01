@@ -7,7 +7,7 @@ import Map from "../map/map";
 import PropTypes from "prop-types";
 import {propTypesPlace} from "../../utils/place";
 
-const Main = ({offers, locationCity, sortTypes, locations}) => {
+const Main = ({activeOffer, offers, locationCity, sortTypes, locations}) => {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -25,7 +25,7 @@ const Main = ({offers, locationCity, sortTypes, locations}) => {
             <PlaceList offers={offers} placeListType={PlaceListType.CITIES} />
           </section>
           <div className="cities__right-section">
-            <Map mapType={MapType.CITIES}/>
+            <Map activeOffer={activeOffer} offers={offers} mapType={MapType.CITIES}/>
           </div>
         </div>
       </div>
@@ -37,7 +37,8 @@ Main.propTypes = {
   offers: PropTypes.arrayOf(propTypesPlace).isRequired,
   locationCity: PropTypes.oneOf(CITIES).isRequired,
   locations: PropTypes.array.isRequired,
-  sortTypes: PropTypes.array.isRequired
+  sortTypes: PropTypes.array.isRequired,
+  activeOffer: PropTypes.number
 };
 
 export default Main;

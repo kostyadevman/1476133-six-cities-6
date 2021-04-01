@@ -7,11 +7,11 @@ import {getCommentsVisible, getOffersNearbyVisible} from "../../../store/data/se
 
 const PlaceDetailPageWrapper = () => {
   const {id} = useParams();
-
   const offer = useSelector((state) => state.DATA.offer);
   const isOfferLoading = useSelector((state) => state.DATA.isOfferLoading);
   const comments = useSelector(getCommentsVisible);
   const offersNearby = useSelector(getOffersNearbyVisible);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const PlaceDetailPageWrapper = () => {
 
   useEffect(() => {
     dispatch(fetchComments(id));
-  }, [id], comments);
+  }, [id]);
 
   useEffect(() => {
     dispatch(fetchOffersNearby(id));

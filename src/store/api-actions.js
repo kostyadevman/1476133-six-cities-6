@@ -7,7 +7,7 @@ import {
   loadOffersNearby,
   requireAuthorization,
   loadFavorite,
-  setFavoriteLoading, setUser
+  setFavoriteLoading, setUser, changeLocation
 } from "./action";
 import {AuthorizationStatus, AppRoute, APIRoute} from "../const";
 
@@ -19,7 +19,10 @@ export const fetchOfferList = () => (dispatch, _getState, api) => (
 export const fetchOffer = (id) => (dispatch, _getState, api) => {
   dispatch(setOfferLoading(true));
   return api.get(APIRoute.OFFER.replace(`:id`, id))
-    .then(({data}) => dispatch(loadOffer(data)))
+    .then(({data}) => {
+      dispatch(loadOffer(data));
+      dispatch(changeLocation(data.city.name));
+    })
     .catch(() => dispatch(redirectToRoute(AppRoute.PAGE_NOT_FOUND)));
 };
 

@@ -2,18 +2,18 @@ import React, {useEffect, useRef} from 'react';
 import leaflet from 'leaflet';
 import PropTypes from 'prop-types';
 import {CitiesMap} from "../../const";
-import {MAP_SETTINGS} from "../../utils/place";
+import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {useSelector} from "react-redux";
-import {getFilteredOffers} from "../../store/data/selectors";
 
 const zoom = 12;
 
-const Map = ({mapType}) => {
-  const {locationCity, activeOffer} = useSelector((state) => state.APP);
-  const offers = useSelector(getFilteredOffers);
+const Map = ({currentOffer, activeOffer, offers, mapType}) => {
+
+  const locationCity = useSelector((state) => state.APP.locationCity);
 
   const mapRef = useRef();
+
 
   useEffect(() => {
     const center = CitiesMap[locationCity];
@@ -31,6 +31,22 @@ const Map = ({mapType}) => {
       })
       .addTo(mapRef.current);
 
+    if (currentOffer) {
+
+      leaflet.marker({
+        lat: currentOffer.location.latitude,
+        lng: currentOffer.location.longitude
+      },
+      {
+        icon: leaflet.icon({
+          iconUrl: `img/pin-active.svg`,
+          iconSize: [30, 30]
+        })
+      })
+        .addTo(mapRef.current)
+        .bindPopup(currentOffer.title);
+    }
+
     offers.forEach((offer) => {
       const customIcon = leaflet.icon({
         iconUrl: offer.id === activeOffer ? `img/pin-active.svg` : `img/pin.svg`,
@@ -46,9 +62,8 @@ const Map = ({mapType}) => {
       })
       .addTo(mapRef.current)
       .bindPopup(offer.title);
-
-
     });
+
     return () => {
       mapRef.current.remove();
     };
@@ -64,6 +79,9 @@ const Map = ({mapType}) => {
 
 Map.propTypes = {
   mapType: PropTypes.string.isRequired,
+  currentOffer: propTypesPlace,
+  activeOffer: PropTypes.number,
+  offers: PropTypes.arrayOf(propTypesPlace).isRequired
 };
 
 export default Map;
