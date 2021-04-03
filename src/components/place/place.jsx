@@ -93,7 +93,7 @@ const Place = ({offer, cardType, setActive, unsetActive}) => {
           <Link to={`/offer/${id}`} href="#">{title}</Link>
         </h2>
         <p className="place-card__type">{capitalize(type)}</p>
-      </div>`
+      </div>
     </article>
   );
 };

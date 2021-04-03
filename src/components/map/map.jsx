@@ -6,7 +6,7 @@ import {MAP_SETTINGS, propTypesPlace} from "../../utils/place";
 import "leaflet/dist/leaflet.css";
 import {useSelector} from "react-redux";
 
-const zoom = 12;
+const ZOOM = 12;
 
 const Map = ({currentOffer, activeOffer, offers, mapType}) => {
 
@@ -19,18 +19,24 @@ const Map = ({currentOffer, activeOffer, offers, mapType}) => {
     const center = CitiesMap[locationCity];
     mapRef.current = leaflet.map(`map`, {
       center,
-      zoom,
+      ZOOM,
       zoomControl: false,
       marker: true
     });
 
-    mapRef.current.setView(center, zoom);
+    mapRef.current.setView(center, ZOOM);
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
       })
       .addTo(mapRef.current);
 
+    return () => {
+      mapRef.current.remove();
+    };
+  }, [locationCity]);
+
+  useEffect(() => {
     if (currentOffer) {
 
       leaflet.marker({
@@ -63,11 +69,7 @@ const Map = ({currentOffer, activeOffer, offers, mapType}) => {
       .addTo(mapRef.current)
       .bindPopup(offer.title);
     });
-
-    return () => {
-      mapRef.current.remove();
-    };
-  }, [locationCity, offers, activeOffer]);
+  }, [offers, activeOffer]);
 
   return (
     <section
